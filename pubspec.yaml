@@ -9,15 +9,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.1
+  flutter_lints: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
   assets:
+    - assets/icon/
     - assets/logo.png
     - assets/flags/flag_turkey.png
     - assets/flags/flag_usa.png
@@ -36,3 +38,8 @@ flutter:
           weight: 300
           style: italic
         - asset: assets/fonts/sfpro/SFPRODISPLAYBOLD.OTF
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icon/applogo.png
