@@ -16,7 +16,7 @@ class ButtonContactScreen extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white70,
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Colors.green),
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/models/country_class.dart';
 import 'package:globe_trans_app/widgets/country_select.dart';
 import 'package:globe_trans_app/widgets/submit_button_widget.dart';
@@ -32,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey[100],
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -90,6 +91,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Your phone number",
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "SFProDisplay",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey),
                       ),
                     ),
                   ),

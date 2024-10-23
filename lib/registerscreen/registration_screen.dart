@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/contactScreen/contact_screen.dart';
+import 'package:globe_trans_app/contactScreen/ad_contact.dart';
 import 'package:globe_trans_app/widgets/submit_button_widget_2.dart';
 
 class VerificationScreen extends StatefulWidget {

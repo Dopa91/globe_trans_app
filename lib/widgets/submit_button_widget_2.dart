@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/contactScreen/contact_screen.dart';
+import 'package:globe_trans_app/contactScreen/ad_contact.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
   const SubmitButtonWidget2({super.key});

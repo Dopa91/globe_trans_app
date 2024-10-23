@@ -3,12 +3,12 @@ import 'package:globe_trans_app/models/country_class.dart';
 
 class CountrySelect extends StatefulWidget {
   final String selectedCountry;
-  final ValueChanged<String> onCountryChanged; // Callback für geändertes Land
+  final ValueChanged<String> onCountryChanged;
 
   const CountrySelect({
     super.key,
     required this.selectedCountry,
-    required this.onCountryChanged, // Funktion wird hier übergeben
+    required this.onCountryChanged,
   });
 
   @override
@@ -34,7 +34,7 @@ class _CountrySelectState extends State<CountrySelect> {
       child: DropdownButton<String>(
         isExpanded: true,
         underline: const SizedBox(),
-        value: widget.selectedCountry, // Wert vom übergeordneten Widget
+        value: widget.selectedCountry,
         items: countryCodes.keys.map((String country) {
           return DropdownMenuItem<String>(
             value: country,
@@ -53,7 +53,7 @@ class _CountrySelectState extends State<CountrySelect> {
         }).toList(),
         onChanged: (String? newValue) {
           if (newValue != null) {
-            widget.onCountryChanged(newValue); // Callback aufrufen
+            widget.onCountryChanged(newValue);
           }
         },
       ),

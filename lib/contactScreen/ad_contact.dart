@@ -59,7 +59,7 @@ class ContactScreenState extends State<ContactScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white70,
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Colors.green),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -101,7 +101,7 @@ class ContactScreenState extends State<ContactScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white70,
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Colors.green),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
