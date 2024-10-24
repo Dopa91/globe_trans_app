@@ -30,7 +30,7 @@ class ContactScreenState extends State<ContactScreen> {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ContactView()));
+                  MaterialPageRoute(builder: (context) => const ContactView()));
             },
             child: const Padding(
               padding: EdgeInsets.only(right: 40),
