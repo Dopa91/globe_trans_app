@@ -17,6 +17,7 @@ class _ContactViewState extends State<ContactView> {
     const ChatView(), // Chat Seite
     const Placeholder(), // Platzhalter für andere Seite
   ];
+
   String getAppBarTitle() {
     switch (selectedPage) {
       case 0:
@@ -36,7 +37,7 @@ class _ContactViewState extends State<ContactView> {
         centerTitle: true,
         title: Text(
           getAppBarTitle(),
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.black,
             fontSize: 22,
@@ -44,29 +45,6 @@ class _ContactViewState extends State<ContactView> {
         ),
         backgroundColor: backgroundColor,
         scrolledUnderElevation: 0,
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ChatView()),
-              );
-            },
-            child: const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Center(
-                child: Text(
-                  "Next",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       body: selectedPage == 0
           ? Column(
