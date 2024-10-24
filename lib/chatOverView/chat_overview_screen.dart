@@ -6,88 +6,58 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          "Chat Übersicht",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 22,
-          ),
-        ),
-        backgroundColor: backgroundColor,
-        scrolledUnderElevation:
-            0, // Damit AppBar farbe sich nicht leicht verändert um den BackgroundColor identisch zu behalten
-        actions: <Widget>[
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ChatView()));
-            },
-            child: const Padding(
-              padding: EdgeInsets.only(right: 20),
-              child: Center(
-                child: Text(
-                  "Next",
+    return Container(
+      color: backgroundColor,
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 3.0, horizontal: 35.0),
+            child: Container(
+              margin: const EdgeInsets.only(right: 20),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(179, 255, 255, 255),
+                border: Border.all(color: Colors.green),
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black87.withOpacity(0.05),
+                    spreadRadius: 2,
+                    blurRadius: 6,
+                  ),
+                ],
+              ),
+              child: ListTile(
+                leading: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/logo.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                title: const Text(
+                  "Vorname Nachname",
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      color: Colors.black),
+                ),
+                subtitle: const Text(
+                  "Online",
+                  style: TextStyle(
                     color: Colors.green,
+                    fontSize: 14,
                   ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: Expanded(
-        child: ListView.builder(
-          itemCount: 100,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 3.0, horizontal: 35.0),
-              child: Container(
-                margin: EdgeInsets.only(right: 20),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(179, 255, 255, 255),
-                  border: Border.all(color: Colors.green),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black87.withOpacity(0.05),
-                      spreadRadius: 2,
-                      blurRadius: 6,
-                    ),
-                  ],
-                ),
-                child: const ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage('assets/logo.png'),
-                  ),
-                  title: Text(
-                    "Vorname Nachname",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Colors.black),
-                  ),
-                  subtitle: Text(
-                    "Online",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        ),
+          );
+        },
       ),
     );
   }
