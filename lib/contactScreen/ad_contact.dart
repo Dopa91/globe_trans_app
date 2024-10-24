@@ -76,7 +76,9 @@ class ContactScreenState extends State<ContactScreen> {
                       border: InputBorder.none,
                     ),
                   ),
-                  const Divider(),
+                  const Divider(
+                    color: Colors.green,
+                  ),
                   TextFormField(
                     decoration: const InputDecoration(
                       hintText: "Nachname",
@@ -140,7 +142,9 @@ class ContactScreenState extends State<ContactScreen> {
                       ),
                     ],
                   ),
-                  const Divider(),
+                  const Divider(
+                    color: Colors.green,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

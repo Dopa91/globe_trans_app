@@ -82,7 +82,7 @@ class VerificationScreenState extends State<VerificationScreen> {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey, width: 2),
+        border: Border.all(color: Colors.green, width: 2),
       ),
       child: Text(
         boxCode,

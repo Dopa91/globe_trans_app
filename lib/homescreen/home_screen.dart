@@ -1,87 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/mobileInputScreen/code_input_screen.dart';
 
+import '../config/themes.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 205, 218, 220),
+      backgroundColor: myTheme.scaffoldBackgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Titel: "GlobeTrans" mit lebendigeren Farben und mehr Schatten
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Globe",
-                  style: TextStyle(
-                    fontSize: 65,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 128, 0), // Dunkleres Grün
-                    shadows: [
-                      Shadow(
-                          blurRadius: 5,
-                          color: Colors.black,
-                          offset: Offset(1, 0)), // Schwarze Kontur
-                      Shadow(
-                          blurRadius: 5,
-                          color: Colors.black54,
-                          offset: Offset(8, 2)), // Milder Schatten
-                      Shadow(
-                          blurRadius: 8,
-                          color: Colors.black38,
-                          offset: Offset(4, 4)),
-                    ],
-                  ),
-                ),
-                Text(
-                  "Trans",
-                  style: TextStyle(
-                    fontSize: 65,
-                    fontWeight: FontWeight.bold,
-                    color:
-                        Color.fromARGB(255, 56, 176, 0), // Noch helleres Grün
-                    shadows: [
-                      Shadow(
-                          blurRadius: 5,
-                          color: Colors.black,
-                          offset: Offset(1, 0)), // Schwarze Kontur
-                      Shadow(
-                          blurRadius: 5,
-                          color: Colors.black54,
-                          offset: Offset(8, 2)), // Milder Schatten
-                      Shadow(
-                          blurRadius: 8,
-                          color: Colors.black38,
-                          offset: Offset(4, 4)),
-                    ],
-                  ),
-                ),
+                Text("Globe", style: myTheme.textTheme.displayLarge),
+                Text("Trans", style: myTheme.textTheme.displayMedium),
               ],
             ),
-            const Text(
-              "Message",
-              style: TextStyle(
-                fontSize: 65,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 112, 224, 0), // Sehr helles Grün
-                shadows: [
-                  Shadow(
-                      blurRadius: 5,
-                      color: Colors.black54,
-                      offset: Offset(8, 2)), // Milder Schatten
-                  Shadow(
-                      blurRadius: 8,
-                      color: Colors.black38,
-                      offset: Offset(4, 4)),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
+            Text("Message", style: myTheme.textTheme.displaySmall),
+
+            SizedBox(height: 20),
             // Bild
             Image.asset(
               "assets/logo.png",
@@ -135,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
