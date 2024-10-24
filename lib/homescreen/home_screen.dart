@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/mobileinputScreen/code_input_screen.dart';
+import 'package:globe_trans_app/mobileInputScreen/code_input_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
