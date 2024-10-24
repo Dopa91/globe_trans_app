@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/chatOverView/chat_overview_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
 
 class ContactView extends StatelessWidget {
@@ -25,7 +26,7 @@ class ContactView extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ContactView()));
+                  MaterialPageRoute(builder: (context) => const ChatView()));
             },
             child: const Padding(
               padding: EdgeInsets.only(right: 20),
