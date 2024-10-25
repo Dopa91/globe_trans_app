@@ -23,11 +23,15 @@ flutter:
     - assets/icon/
     - assets/logo.png
     - assets/flags/flag_turkey.png
+    - assets/flags/flag_spain.png
     - assets/flags/flag_usa.png
     - assets/flags/flag_germany.png
     - assets/flags/flag_france.png
     - assets/flags/flag_canada.png
     - assets/flags/flag_belgium.png
+    - assets/flags/flag_italy.png
+    - assets/flags/flag_poland.png
+
   fonts:
     - family: SFProDisplay
       fonts:
