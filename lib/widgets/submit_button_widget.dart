@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/registerScreen/registration_screen.dart';
+import 'package:globe_trans_app/verificationScreen/verification_screen.dart';
 
 class SubmitButtonWidget extends StatelessWidget {
   const SubmitButtonWidget({super.key});
@@ -22,12 +22,10 @@ class SubmitButtonWidget extends StatelessWidget {
             elevation: 10,
           ),
           onPressed: () {
-            // Navigiere zur neuen Seite
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      const VerificationScreen()), // Füge hier die Zielseite hinzu
+                  builder: (context) => const VerificationScreen()),
             );
           },
           child: const Text(
