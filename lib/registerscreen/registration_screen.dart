@@ -1,94 +1,129 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/contactScreen/ad_contact.dart';
-import 'package:globe_trans_app/widgets/submit_button_widget_2.dart';
+import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/models/country_class.dart';
+import 'package:globe_trans_app/widgets/country_select.dart';
+import 'package:globe_trans_app/widgets/submit_button_widget.dart';
 
-class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
   @override
-  VerificationScreenState createState() => VerificationScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class VerificationScreenState extends State<VerificationScreen> {
-  String code = "";
+class _RegistrationScreenState extends State<RegistrationScreen> {
+  String selectedCountry = "Germany"; // Standardland Deutschland
+  String? selectedCode;
+  bool syncContacts = false; // Schalter für Kontakte synchronisieren
+
+  @override
+  void initState() {
+    super.initState();
+    selectedCode =
+        countryCodes[selectedCountry]; // Standardvorwahl für Deutschland
+  }
+
+  void _onCountryChanged(String newCountry) {
+    setState(() {
+      selectedCountry = newCountry;
+      selectedCode = countryCodes[newCountry]; // Aktualisiere Vorwahl
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Korrektur hier
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 205, 218, 220),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 205, 218, 220),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              "Enter Code",
+              "Your Phone",
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              "We have sent you an SMS with the code to +49 xxx xxx xxx",
+            const SizedBox(height: 10),
+            Text(
+              "Please confirm your country code and enter your phone number.",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+              // style: Theme.of(context).textTheme.displayMedium,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 30),
+            // Hier wird der CountrySelect Widget verwendet
+            CountrySelect(
+              selectedCountry: selectedCountry,
+              onCountryChanged: _onCountryChanged,
+            ),
+            const SizedBox(height: 15),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 6,
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Text(selectedCode ?? '+49',
+                      style: const TextStyle(fontSize: 16)),
+                  const SizedBox(width: 10),
+                  const Expanded(
+                    child: TextField(
+                      keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Your phone number",
+                        hintStyle: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "SFProDisplay",
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 15),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildCodeBox(""),
-                buildCodeBox(""),
-                buildCodeBox(""),
-                buildCodeBox(""),
+                const Text("Sync Contacts", style: TextStyle(fontSize: 16)),
+                Switch(
+                  value: syncContacts,
+                  activeColor: const Color.fromARGB(255, 22, 174, 27),
+                  inactiveTrackColor: Colors.white,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      syncContacts = newValue;
+                    });
+                  },
+                ),
               ],
             ),
-            const SizedBox(height: 16),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ContactScreen(),
-                  ),
-                );
-              },
-              child: const Text(
-                "Resend Code ",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-            const SizedBox(height: 40),
-            const SubmitButtonWidget2(),
+            const SizedBox(height: 30),
+            const SubmitButtonWidget(),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildCodeBox(String boxCode) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.green, width: 2),
-      ),
-      child: Text(
-        boxCode,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
