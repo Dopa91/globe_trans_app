@@ -22,12 +22,9 @@ class SubmitButtonWidget2 extends StatelessWidget {
             elevation: 10,
           ),
           onPressed: () {
-            // Navigiere zur neuen Seite
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const ContactScreen()), // Füge hier die Zielseite hinzu
+              MaterialPageRoute(builder: (context) => const ContactScreen()),
             );
           },
           child: const Text(
