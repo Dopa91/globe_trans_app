@@ -5,6 +5,9 @@ final Map<String, String> countryCodes = {
   "France": "+33",
   "Turkey": "+90",
   "Belgium": "+32",
+  "Spain": "+34",
+  "Italy": "+39",
+  "Poland": "+48",
 };
 
 final Map<String, String> countryFlags = {
@@ -14,4 +17,7 @@ final Map<String, String> countryFlags = {
   "France": "assets/flags/flag_france.png",
   "Turkey": "assets/flags/flag_turkey.png",
   "Belgium": "assets/flags/flag_belgium.png",
+  "Spain": "assets/flags/flag_spain.png",
+  "Italy": "assets/flags/flag_italy.png",
+  "Poland": "assets/flags/flag_poland.png",
 };
