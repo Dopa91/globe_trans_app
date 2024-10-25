@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/contactScreen/button_contact_screen.dart';
-import 'package:globe_trans_app/contactoverview/contact_overview.dart';
+import 'package:globe_trans_app/contactOverView/contact_overview.dart';
 
 import '../models/country_flag.dart';
 
