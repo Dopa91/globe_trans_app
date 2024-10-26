@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/contactScreen/button_contact_screen.dart';
 import 'package:globe_trans_app/contactOverView/contact_overview.dart';
+import 'package:globe_trans_app/contactScreen/text_container_input.dart';
 
 import '../models/country_flag.dart';
 
@@ -51,49 +52,7 @@ class ContactScreenState extends State<ContactScreen> {
         padding: const EdgeInsets.all(50),
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 30,
-              ),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white70,
-                border: Border.all(color: Colors.green),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Vorname",
-                      hintStyle: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 16,
-                          fontFamily: "SFProDisplay",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                  const Divider(
-                    color: Colors.green,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: "Nachname",
-                      hintStyle: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 16,
-                          fontFamily: "SFProDisplay",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const TextContainerInput(),
             const SizedBox(height: 32),
             Container(
               padding: const EdgeInsets.only(
