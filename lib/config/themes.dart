@@ -19,7 +19,7 @@ ThemeData myTheme = ThemeData(
         Shadow(blurRadius: 8, color: Colors.black38, offset: Offset(4, 4)),
       ],
     ),
-    // S
+
     //Style für "Trans"
     displayMedium: TextStyle(
       fontSize: 65,
