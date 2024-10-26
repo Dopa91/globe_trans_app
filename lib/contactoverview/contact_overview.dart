@@ -139,7 +139,7 @@ class _ContactViewState extends State<ContactView> {
         initialActiveIndex: selectedPage,
         onTap: (int index) {
           setState(() {
-            selectedPage = index; // Wechselt die Seite bei Tab-Navigation
+            selectedPage = index; // Wechselt die Seite bei Tab-Navigatio
           });
         },
       ),
