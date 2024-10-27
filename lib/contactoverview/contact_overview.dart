@@ -2,6 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/chatOverView/chat_overview_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'dart:math';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key});
@@ -12,6 +13,20 @@ class ContactView extends StatefulWidget {
 
 class _ContactViewState extends State<ContactView> {
   int selectedPage = 0;
+
+  final List<String> names = [
+    "Mert Samed Durmus",
+    "Melek Durmus",
+    "Direnc Durmus",
+    "Ismail Karaaslan",
+    "Yeliz Orhan",
+    "Serkan Durmus",
+    "Nezahat Karaaslan",
+    "Nadine Karaaslan",
+    "Yvon Karaaslan",
+    "Muharrem Karaaslan",
+  ];
+
   final List<Widget> _pageOptions = [
     const ContactView(), // Kontakte Seite
     const ChatView(), // Chat Seite
@@ -80,8 +95,11 @@ class _ContactViewState extends State<ContactView> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 20,
+                    itemCount: names.length, // Die Anzahl der Namen
                     itemBuilder: (context, index) {
+                      // Zufällige Auswahl eines Namens
+                      String contactName =
+                          names[Random().nextInt(names.length)];
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 3.0, horizontal: 35.0),
@@ -99,19 +117,19 @@ class _ContactViewState extends State<ContactView> {
                               ),
                             ],
                           ),
-                          child: const ListTile(
-                            leading: CircleAvatar(
+                          child: ListTile(
+                            leading: const CircleAvatar(
                               radius: 30,
                               backgroundImage: AssetImage('assets/logo.png'),
                             ),
                             title: Text(
-                              "Vorname Nachname",
-                              style: TextStyle(
+                              contactName, // Zufälliger Name
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 12,
+                                  fontSize: 15,
                                   color: Colors.black),
                             ),
-                            subtitle: Text(
+                            subtitle: const Text(
                               "Online",
                               style: TextStyle(
                                 color: Colors.green,
