@@ -29,7 +29,7 @@ class _ContactViewState extends State<ContactView> {
 
   final List<Widget> _pageOptions = [
     const ContactView(), // Kontakte Seite
-    const ChatView(), // Chat Seite
+    ChatView(), // Chat Seite
     const Placeholder(), // Platzhalter für andere Seite
   ];
 

@@ -1,9 +1,23 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/chatScreen/chat_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
 
 class ChatView extends StatelessWidget {
-  const ChatView({super.key});
+  ChatView({super.key});
+
+  final List<String> names = [
+    "Mert Samed Durmus",
+    "Melek Durmus",
+    "Direnc Durmus",
+    "Ismail Karaaslan",
+    "Yeliz Orhan",
+    "Serkan Durmus",
+    "Nezahat Karaaslan",
+    "Nadine Karaaslan",
+    "Yvon Karaaslan",
+    "Muharrem Karaaslan",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +43,9 @@ class ChatView extends StatelessWidget {
             child: ListView.builder(
               itemCount: 10,
               itemBuilder: (context, index) {
+                // Zufälliger Name wird hier ausgewählt
+                String contactName = names[Random().nextInt(names.length)];
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 3.0, horizontal: 35.0),
@@ -50,10 +67,9 @@ class ChatView extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            pageBuilder: (context, animation,
-                                    secondaryAnimation) =>
-                                const ChatScreen(
-                                    contactName: "Vorname Nachname"),
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    ChatScreen(contactName: contactName),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);
@@ -75,8 +91,8 @@ class ChatView extends StatelessWidget {
                       leading: const CircleAvatar(
                         backgroundImage: AssetImage('assets/logo.png'),
                       ),
-                      title: const Text("Vorname Nachname",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      title: Text(contactName,
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: const Text("Letzte Nachricht",
                           style: TextStyle(color: Colors.grey)),
                     ),

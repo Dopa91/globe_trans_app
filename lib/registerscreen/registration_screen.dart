@@ -52,7 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
               "Please confirm your country code and enter your phone number.",
               textAlign: TextAlign.center,
               style: TextStyle(

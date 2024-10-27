@@ -14,7 +14,6 @@ class VerificationScreenState extends State<VerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Korrektur hier
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 205, 218, 220),
       appBar: AppBar(
