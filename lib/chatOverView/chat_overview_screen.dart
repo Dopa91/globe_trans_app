@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/chatScreen/chat_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
 
 class ChatView extends StatelessWidget {
@@ -15,12 +16,12 @@ class ChatView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              storyItem('assets/logo.png', 'Mein Status'),
-              storyItem('assets/logo.png', 'Alice'),
-              storyItem('assets/logo.png', 'Bob'),
-              storyItem('assets/logo.png', 'John'),
-              storyItem('assets/logo.png', 'John'),
-              storyItem('assets/logo.png', 'John'),
+              storyItem("assets/statusfoto.jpg", "Mein Status"),
+              storyItem("assets/mertkontaktfoto.jpeg", "Mert"),
+              storyItem("assets/melekkontaktfoto.jpeg", "Melek"),
+              storyItem("assets/direnckontaktfoto.jpeg", "Direnc"),
+              storyItem('assets/logo.png', 'Iso'),
+              storyItem("assets/yelizkontaktfoto.jpeg", "Yeliz"),
             ],
           ),
           const Divider(color: Colors.green),
@@ -46,31 +47,38 @@ class ChatView extends StatelessWidget {
                       ],
                     ),
                     child: ListTile(
-                      leading: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/logo.png'),
-                            fit: BoxFit.cover,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation,
+                                    secondaryAnimation) =>
+                                const ChatScreen(
+                                    contactName: "Vorname Nachname"),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.easeInOut;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
                           ),
-                        ),
+                        );
+                      },
+                      leading: const CircleAvatar(
+                        backgroundImage: AssetImage('assets/logo.png'),
                       ),
-                      title: const Text(
-                        "Vorname Nachname",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.black),
-                      ),
-                      subtitle: const Text(
-                        "Online",
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 14,
-                        ),
-                      ),
+                      title: const Text("Vorname Nachname",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: const Text("Letzte Nachricht",
+                          style: TextStyle(color: Colors.grey)),
                     ),
                   ),
                 );
