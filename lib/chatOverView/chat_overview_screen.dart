@@ -41,10 +41,9 @@ class ChatView extends StatelessWidget {
           const Divider(color: Colors.green),
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: names.length,
               itemBuilder: (context, index) {
-                // Zufälliger Name wird hier ausgewählt
-                String contactName = names[Random().nextInt(names.length)];
+                String contactName = names[index]; //
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(
