@@ -2,6 +2,8 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/chatOverView/chat_overview_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/contactScreen/ad_contact.dart';
+
 import 'dart:math';
 
 class ContactView extends StatefulWidget {
@@ -44,11 +46,20 @@ class _ContactViewState extends State<ContactView> {
     }
   }
 
+  void _addNewContact() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ContactScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
+        automaticallyImplyLeading:
+            false, // Deaktieviert den Back Icon Nicht vergessen ist Wichtig
         centerTitle: true,
         title: Text(
           getAppBarTitle(),
@@ -60,6 +71,15 @@ class _ContactViewState extends State<ContactView> {
         ),
         backgroundColor: backgroundColor,
         scrolledUnderElevation: 0,
+        actions: selectedPage == 0 // Zeige das Icon nur auf der Kontakte-Seite
+            ? [
+                IconButton(
+                  padding: const EdgeInsets.only(right: 35.0),
+                  icon: const Icon(Icons.add, color: Colors.green),
+                  onPressed: _addNewContact,
+                ),
+              ]
+            : null, // Keine Aktionen auf anderen Seiten / Das darf ich nicht Vergessen wenn ich nächstes mal ein neues Icon hinzufüge das es auf der Nächsten Seite kein Funktion haben darf
       ),
       body: selectedPage == 0
           ? Column(
@@ -95,11 +115,9 @@ class _ContactViewState extends State<ContactView> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: names.length, // Die Anzahl der Namen
+                    itemCount: names.length,
                     itemBuilder: (context, index) {
-                      // Zufällige Auswahl eines Namens
-                      String contactName =
-                          names[Random().nextInt(names.length)];
+                      String contactName = names[index];
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 3.0, horizontal: 35.0),
@@ -123,11 +141,12 @@ class _ContactViewState extends State<ContactView> {
                               backgroundImage: AssetImage('assets/logo.png'),
                             ),
                             title: Text(
-                              contactName, // Zufälliger Name
+                              contactName,
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Colors.black),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                                color: Colors.black,
+                              ),
                             ),
                             subtitle: const Text(
                               "Online",
@@ -157,7 +176,7 @@ class _ContactViewState extends State<ContactView> {
         initialActiveIndex: selectedPage,
         onTap: (int index) {
           setState(() {
-            selectedPage = index; // Wechselt die Seite bei Tab-Navigatio
+            selectedPage = index;
           });
         },
       ),
