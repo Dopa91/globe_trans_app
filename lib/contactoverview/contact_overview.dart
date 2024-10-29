@@ -4,8 +4,6 @@ import 'package:globe_trans_app/chatOverView/chat_overview_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/contactScreen/ad_contact.dart';
 
-import 'dart:math';
-
 class ContactView extends StatefulWidget {
   const ContactView({super.key});
 

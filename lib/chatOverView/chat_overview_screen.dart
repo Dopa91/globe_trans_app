@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/chatScreen/chat_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';

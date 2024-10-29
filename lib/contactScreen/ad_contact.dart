@@ -52,7 +52,7 @@ class ContactScreenState extends State<ContactScreen> {
         padding: const EdgeInsets.all(50),
         child: Column(
           children: [
-            const TextContainerInput(),
+            TextContainerInput(),
             const SizedBox(height: 32),
             Container(
               padding: const EdgeInsets.only(

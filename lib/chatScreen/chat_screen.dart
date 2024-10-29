@@ -20,11 +20,15 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final List<Message> messages = [
-    Message("Hello, how are you?", false,
+    Message(
+        "Hello, how are you?\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nWie geht e dir?",
+        false,
         DateTime.now().subtract(const Duration(minutes: 5))),
     Message("Mir geht's gut, danke!", true,
         DateTime.now().subtract(const Duration(minutes: 4))),
-    Message("Do you have time today?", false,
+    Message(
+        "Do you have time today?\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\nHast du heute Zeit?",
+        false,
         DateTime.now().subtract(const Duration(minutes: 3))),
     Message("Ja, gerne! Lass uns treffen.", true,
         DateTime.now().subtract(const Duration(minutes: 2))),
