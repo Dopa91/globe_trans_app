@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
-import 'package:globe_trans_app/models/country_class.dart';
-import 'package:globe_trans_app/widgets/country_select.dart';
-import 'package:globe_trans_app/widgets/submit_button_widget.dart';
+import 'package:globe_trans_app/features/register_feature/repository/country_class.dart';
+import 'package:globe_trans_app/features/register_feature/widgets/country_select.dart';
+import 'package:globe_trans_app/features/register_feature/widgets/submit_button_widget.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -63,6 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             const SizedBox(height: 30),
             // Hier wird der CountrySelect Widget verwendet
+
             CountrySelect(
               selectedCountry: selectedCountry,
               onCountryChanged: _onCountryChanged,

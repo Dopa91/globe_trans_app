@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ButtonContactScreen extends StatelessWidget {
-  const ButtonContactScreen({
+class InputEmailField extends StatelessWidget {
+  const InputEmailField({
     super.key,
     required this.text,
   });

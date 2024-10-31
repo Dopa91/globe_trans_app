@@ -1,10 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/verificationScreen/verification_screen.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
+import 'package:globe_trans_app/presentation/contactScreen/ad_contact.dart';
 
-class SubmitButtonWidget extends StatelessWidget {
-  const SubmitButtonWidget({super.key});
+class SubmitButtonWidget2 extends StatelessWidget {
+  const SubmitButtonWidget2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,7 @@ class SubmitButtonWidget extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => const VerificationScreen()),
+              MaterialPageRoute(builder: (context) => const ContactScreen()),
             );
           },
           child: const Text(

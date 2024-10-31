@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/models/country_class.dart';
+import 'package:globe_trans_app/features/register_feature/repository/country_class.dart';
 
 class CountrySelect extends StatefulWidget {
   final String selectedCountry;

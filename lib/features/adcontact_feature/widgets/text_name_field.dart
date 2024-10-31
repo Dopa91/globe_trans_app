@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TextContainerInput extends StatelessWidget {
-  const TextContainerInput({
+class TextNameField extends StatelessWidget {
+  const TextNameField({
     super.key,
   });
 

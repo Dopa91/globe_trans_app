@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/registerScreen/registration_screen.dart';
+import 'package:globe_trans_app/features/register_feature/presentation/registerScreen/registration_screen.dart';
 
-import '../config/themes.dart';
+import '../../../../config/themes.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Text("Message", style: myTheme.textTheme.displaySmall),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             Image.asset(
               "assets/logo.png",

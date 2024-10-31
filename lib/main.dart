@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/themes.dart';
-import 'package:globe_trans_app/homescreen/home_screen.dart';
+import 'package:globe_trans_app/features/register_feature/presentation/homescreen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

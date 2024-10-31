@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/chatScreen/chat_screen.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
+import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class ChatView extends StatelessWidget {
-  ChatView({super.key});
-
-  final List<String> names = [
-    "Mert Samed Durmus",
-    "Melek Durmus",
-    "Direnc Durmus",
-    "Ismail Karaaslan",
-    "Yeliz Orhan",
-    "Serkan Durmus",
-    "Nezahat Karaaslan",
-    "Nadine Karaaslan",
-    "Yvon Karaaslan",
-    "Muharrem Karaaslan",
-  ];
+  const ChatView({super.key});
 
   @override
   Widget build(BuildContext context) {

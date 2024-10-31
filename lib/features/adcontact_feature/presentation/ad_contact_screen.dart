@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/contactScreen/button_contact_screen.dart';
-import 'package:globe_trans_app/contactOverView/contact_overview.dart';
-import 'package:globe_trans_app/contactScreen/text_container_input.dart';
+import 'package:globe_trans_app/features/adcontact_feature/widgets/input_email_field.dart';
+import 'package:globe_trans_app/features/adcontact_feature/widgets/language_dropdown.dart';
+import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
+import 'package:globe_trans_app/features/contact_overview_feature/presentation/contact_overview.dart';
 
-import '../models/country_flag.dart';
+import '../repository/country_flag.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -52,7 +53,7 @@ class ContactScreenState extends State<ContactScreen> {
         padding: const EdgeInsets.all(50),
         child: Column(
           children: [
-            TextContainerInput(),
+            const TextNameField(),
             const SizedBox(height: 32),
             Container(
               padding: const EdgeInsets.only(
@@ -173,9 +174,9 @@ class ContactScreenState extends State<ContactScreen> {
             const SizedBox(
               height: 30,
             ),
-            const ButtonContactScreen(text: "E-Mail"),
+            const InputEmailField(text: "E-Mail"),
             const SizedBox(height: 30),
-            const ButtonContactScreen(text: "Ausgangssprache Wählen")
+            const LanguageDropdown(text: "Ausgangssprache"),
           ],
         ),
       ),
