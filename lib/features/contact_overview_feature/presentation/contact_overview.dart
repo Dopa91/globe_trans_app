@@ -1,9 +1,9 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
 import 'package:globe_trans_app/features/shared/name_repo.dart';
-import 'package:globe_trans_app/presentation/contactScreen/ad_contact.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key});

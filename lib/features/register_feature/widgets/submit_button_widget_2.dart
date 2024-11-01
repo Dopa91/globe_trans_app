@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
-import 'package:globe_trans_app/presentation/contactScreen/ad_contact.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
   const SubmitButtonWidget2({super.key});

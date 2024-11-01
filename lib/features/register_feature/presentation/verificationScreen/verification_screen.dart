@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/submit_button_widget_2.dart';
-import 'package:globe_trans_app/presentation/contactScreen/ad_contact.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});

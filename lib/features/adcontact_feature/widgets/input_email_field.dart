@@ -17,7 +17,7 @@ class InputEmailField extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white70,
         border: Border.all(color: Colors.green),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         children: [
