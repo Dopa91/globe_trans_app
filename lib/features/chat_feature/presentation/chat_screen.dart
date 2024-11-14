@@ -9,6 +9,12 @@ class Message {
   Message(this.text, this.isSent, this.timestamp);
 }
 
+class Chat {
+  final List<Message> messages;
+
+  Chat(this.messages);
+}
+
 class ChatScreen extends StatefulWidget {
   final String contactName;
 
@@ -151,9 +157,8 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.send, color: Colors.green),
-            onPressed: _sendMessage,
-          ),
+              icon: const Icon(Icons.send, color: Colors.green),
+              onPressed: _sendMessage),
         ],
       ),
     );
