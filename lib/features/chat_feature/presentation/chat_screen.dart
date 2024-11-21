@@ -20,9 +20,7 @@ class ChatScreen extends StatefulWidget {
   final String contactName;
 
   const ChatScreen(
-      {super.key,
-      required this.contactName,
-      required this.repository}); // Add required this.repository
+      {super.key, required this.contactName, required this.repository});
 
   final DatabaseRepository repository;
 
@@ -47,19 +45,6 @@ class _ChatScreenState extends State<ChatScreen> {
   ];
 
   final TextEditingController _controller = TextEditingController();
-
-  //void _sendMessage() async {
-  //await Future.delayed(
-  // const Duration(seconds: 3),
-  //);
-
-  //   if (_controller.text.isNotEmpty) {
-  //     setState(() {
-  //       messages.add(Message(_controller.text, true, DateTime.now()));
-  //       _controller.clear();
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -94,12 +79,15 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           const SizedBox(height: 20),
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) {
-                final message = messages[index];
-                return _buildMessageBubble(message);
-              },
+            child: FutureBuilder(
+              future: Future.value(messages),
+              builder: (context, snapshot) => ListView.builder(
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final message = messages[index];
+                  return _buildMessageBubble(message);
+                },
+              ),
             ),
           ),
           _buildMessageInput(),
