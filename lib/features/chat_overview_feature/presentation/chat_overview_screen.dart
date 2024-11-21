@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
 import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class ChatView extends StatelessWidget {
-  const ChatView({super.key});
+  const ChatView({super.key, required this.repository});
+
+  final DatabaseRepository repository;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,10 @@ class ChatView extends StatelessWidget {
                           PageRouteBuilder(
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    ChatScreen(contactName: contactName),
+                                    ChatScreen(
+                              contactName: contactName,
+                              repository: repository,
+                            ),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);

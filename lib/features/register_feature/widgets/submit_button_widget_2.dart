@@ -1,10 +1,12 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
-  const SubmitButtonWidget2({super.key});
+  const SubmitButtonWidget2({super.key, required this.repository});
+  final DatabaseRepository repository;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,10 @@ class SubmitButtonWidget2 extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ContactScreen()),
+              MaterialPageRoute(
+                  builder: (context) => ContactScreen(
+                        repository: repository,
+                      )),
             );
           },
           child: const Text(

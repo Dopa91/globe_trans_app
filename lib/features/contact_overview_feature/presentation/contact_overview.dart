@@ -1,12 +1,14 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
 import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class ContactView extends StatefulWidget {
-  const ContactView({super.key});
+  const ContactView({super.key, required this.repository});
+  final DatabaseRepository repository;
 
   @override
   _ContactViewState createState() => _ContactViewState();
@@ -15,11 +17,21 @@ class ContactView extends StatefulWidget {
 class _ContactViewState extends State<ContactView> {
   int selectedPage = 0;
 
-  final List<Widget> _pageOptions = [
-    const ContactView(), // Kontakte Seite
-    const ChatView(), // Chat Seite
-    const Placeholder(), // Platzhalter für andere Seite
-  ];
+  late List<Widget> _pageOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageOptions = [
+      ContactView(
+        repository: widget.repository,
+      ), // Kontakte Seite
+      ChatView(
+        repository: widget.repository,
+      ), // Chat Seite
+      const Placeholder(), // Platzhalter für andere Seite
+    ];
+  }
 
   String getAppBarTitle() {
     switch (selectedPage) {
@@ -35,7 +47,10 @@ class _ContactViewState extends State<ContactView> {
   void _addNewContact() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ContactScreen()),
+      MaterialPageRoute(
+          builder: (context) => ContactScreen(
+                repository: widget.repository,
+              )),
     );
   }
 

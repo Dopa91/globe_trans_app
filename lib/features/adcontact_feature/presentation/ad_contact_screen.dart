@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/input_email_field.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/language_dropdown.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
@@ -7,8 +8,8 @@ import 'package:globe_trans_app/features/contact_overview_feature/presentation/c
 import '../repository/country_flag.dart';
 
 class ContactScreen extends StatefulWidget {
-  const ContactScreen({super.key});
-
+  const ContactScreen({super.key, required this.repository});
+  final DatabaseRepository repository;
   @override
   ContactScreenState createState() => ContactScreenState();
 }
@@ -31,8 +32,12 @@ class ContactScreenState extends State<ContactScreen> {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const ContactView()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ContactView(
+                            repository: widget.repository,
+                          )));
             },
             child: const Padding(
               padding: EdgeInsets.only(right: 40),

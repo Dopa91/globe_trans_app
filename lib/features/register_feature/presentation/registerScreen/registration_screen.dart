@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/register_feature/repository/country_class.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/country_select.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/submit_button_widget.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+  const RegistrationScreen({super.key, required this.repository});
+  final DatabaseRepository repository;
 
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -123,7 +125,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ],
             ),
             const SizedBox(height: 30),
-            const SubmitButtonWidget(),
+            SubmitButtonWidget(
+              repository: widget.repository,
+            ),
           ],
         ),
       ),

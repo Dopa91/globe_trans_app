@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:intl/intl.dart';
 
 class Message {
@@ -18,7 +19,12 @@ class Chat {
 class ChatScreen extends StatefulWidget {
   final String contactName;
 
-  const ChatScreen({super.key, required this.contactName});
+  const ChatScreen(
+      {super.key,
+      required this.contactName,
+      required this.repository}); // Add required this.repository
+
+  final DatabaseRepository repository;
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -42,14 +48,18 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final TextEditingController _controller = TextEditingController();
 
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
-      setState(() {
-        messages.add(Message(_controller.text, true, DateTime.now()));
-        _controller.clear();
-      });
-    }
-  }
+  //void _sendMessage() async {
+  //await Future.delayed(
+  // const Duration(seconds: 3),
+  //);
+
+  //   if (_controller.text.isNotEmpty) {
+  //     setState(() {
+  //       messages.add(Message(_controller.text, true, DateTime.now()));
+  //       _controller.clear();
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +168,17 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           IconButton(
               icon: const Icon(Icons.send, color: Colors.green),
-              onPressed: _sendMessage),
+              onPressed: () async {
+                if (_controller.text.isNotEmpty) {
+                  await widget.repository.sendMessage(
+                      Message(_controller.text, true, DateTime.now()));
+                  setState(() {
+                    messages
+                        .add(Message(_controller.text, true, DateTime.now()));
+                    _controller.clear();
+                  });
+                }
+              }),
         ],
       ),
     );

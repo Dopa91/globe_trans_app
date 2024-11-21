@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/submit_button_widget_2.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  const VerificationScreen({super.key, required this.repository});
+  final DatabaseRepository repository;
 
   @override
   VerificationScreenState createState() => VerificationScreenState();
@@ -54,7 +56,9 @@ class VerificationScreenState extends State<VerificationScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ContactScreen(),
+                    builder: (context) => ContactScreen(
+                      repository: widget.repository,
+                    ),
                   ),
                 );
               },
@@ -68,7 +72,9 @@ class VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            const SubmitButtonWidget2(),
+            SubmitButtonWidget2(
+              repository: widget.repository,
+            ),
           ],
         ),
       ),
