@@ -7,8 +7,8 @@ class MockDatabase implements DatabaseRepository {
 
   @override
   Future<void> sendMessage(Message message) async {
-    await Future.delayed(const Duration(seconds: 1));
-    _messages.add(message);
+    await Future.delayed(
+        const Duration(seconds: 1), () => _messages.add(message));
   }
 
   @override
