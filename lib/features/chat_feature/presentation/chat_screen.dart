@@ -80,14 +80,25 @@ class _ChatScreenState extends State<ChatScreen> {
           const SizedBox(height: 20),
           Expanded(
             child: FutureBuilder(
-              future: Future.value(messages),
-              builder: (context, snapshot) => ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  final message = messages[index];
-                  return _buildMessageBubble(message);
-                },
-              ),
+              future: widget.repository.getAllMessages(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Nachrichten konnten nicht geladen werden."),
+                  );
+                } else if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return ListView.builder(
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    final message = messages[index];
+                    return _buildMessageBubble(message);
+                  },
+                );
+              },
             ),
           ),
           _buildMessageInput(),
