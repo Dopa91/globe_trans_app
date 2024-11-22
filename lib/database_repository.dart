@@ -3,6 +3,8 @@ import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.d
 abstract class DatabaseRepository {
   // Message
 
+  // Future<void> getMessage(Message message);
+
   // Sende Nachrichten
   Future<void> sendMessage(Message message);
 
@@ -25,4 +27,7 @@ abstract class DatabaseRepository {
 
   // Übersicht aller chats
   Future<List<Chat>> getAllChats();
+
+  // Kontakte
+  Future<List<String>> getContactList();
 }
