@@ -4,7 +4,6 @@ import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
-import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key, required this.repository});
@@ -115,50 +114,68 @@ class _ContactViewState extends State<ContactView> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: names.length,
-                    itemBuilder: (context, index) {
-                      String contactName = names[index];
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 3.0, horizontal: 35.0),
-                        child: Container(
-                          margin: const EdgeInsets.only(right: 20),
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(179, 255, 255, 255),
-                            border: Border.all(color: Colors.green),
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black87.withOpacity(0.05),
-                                spreadRadius: 2,
-                                blurRadius: 6,
+                  child: FutureBuilder(
+                    future: widget.repository.getContactList(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return const Center(
+                            child: Text("Fehler beim Laden der Kontakte"));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(
+                            child: Text("Keine Kontakte vorhanden"));
+                      } else {
+                        var contactList = snapshot.data;
+                        return ListView.builder(
+                          itemCount: contactList?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            String contactName = contactList![index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3.0, horizontal: 35.0),
+                              child: Container(
+                                margin: const EdgeInsets.only(right: 20),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(179, 255, 255, 255),
+                                  border: Border.all(color: Colors.green),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black87.withOpacity(0.05),
+                                      spreadRadius: 2,
+                                      blurRadius: 6,
+                                    ),
+                                  ],
+                                ),
+                                child: ListTile(
+                                  leading: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundImage:
+                                        AssetImage('assets/logo.png'),
+                                  ),
+                                  title: Text(
+                                    contactName,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  subtitle: const Text(
+                                    "Online",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
-                          child: ListTile(
-                            leading: const CircleAvatar(
-                              radius: 30,
-                              backgroundImage: AssetImage('assets/logo.png'),
-                            ),
-                            title: Text(
-                              contactName,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.black,
-                              ),
-                            ),
-                            subtitle: const Text(
-                              "Online",
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
+                            );
+                          },
+                        );
+                      }
                     },
                   ),
                 ),
