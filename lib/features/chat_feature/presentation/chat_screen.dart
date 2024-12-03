@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/database_repository.dart';
+import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:intl/intl.dart';
 
 class Message {

@@ -1,6 +1,6 @@
-import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
+import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class MockDatabase implements DatabaseRepository {
   final List<Message> _messages = [];

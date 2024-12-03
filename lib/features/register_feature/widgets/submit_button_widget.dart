@@ -1,8 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/register_feature/presentation/verificationScreen/verification_screen.dart';
+import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class SubmitButtonWidget extends StatelessWidget {
   const SubmitButtonWidget({super.key, required this.repository});

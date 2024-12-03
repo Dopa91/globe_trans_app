@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
-import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
+import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class ChatView extends StatelessWidget {
