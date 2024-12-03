@@ -1,10 +1,12 @@
 import 'package:globe_trans_app/database_repository.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
-import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class MockDatabase implements DatabaseRepository {
   final List<Message> _messages = [];
   final List<Chat> _chats = [];
+  List<String> saveNames = [];
+  List<Contact> contacts = [];
 
   // @override
   // Future<void> getMessage(Message message) async {
@@ -15,7 +17,7 @@ class MockDatabase implements DatabaseRepository {
   @override
   Future<void> sendMessage(Message message) async {
     await Future.delayed(
-        const Duration(seconds: 3), () => _messages.add(message));
+        const Duration(seconds: 1), () => _messages.add(message));
   }
 
   @override
@@ -60,8 +62,36 @@ class MockDatabase implements DatabaseRepository {
 
   // Kontakte
   @override
-  Future<List<String>> getContactList() async {
-    await Future.delayed(const Duration(seconds: 3));
-    return names;
+  Future<List<Contact>> getContactList() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return contacts; // bearbeiten erledigt
+  }
+
+  @override
+  Future<void> addContact(
+      String name, String email, String phoneNumber, String image) async {
+    Contact newContact = Contact(
+        name: name, email: email, phoneNumber: phoneNumber, image: image);
+    contacts.add(newContact);
+    return Future.value();
+    // bearbeiten erledigt
+  }
+
+  @override
+  Future<void> deleteContact(Contact contact) async {
+    await Future.delayed(const Duration(seconds: 1));
+    contacts.remove(contact); // bearbeiten erledigt
+  }
+
+  @override
+  Future<void> saveContactList(List<Contact> newContacts) async {
+    await Future.delayed(const Duration(seconds: 1));
+    contacts = newContacts; // bearbeiten erledigt
+  }
+
+  @override
+  Future<void> getContact(Contact contact) async {
+    await Future.delayed(const Duration(seconds: 1));
+    contacts.add(contact); // bearbeiten erledigt
   }
 }
