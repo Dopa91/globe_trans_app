@@ -42,7 +42,26 @@ class _ContactViewState extends State<ContactView> {
       case 1:
         return "Chat Übersicht";
       default:
-        return "Home";
+        return "Unbekannt";
+    }
+  }
+
+  void searchContact(String name) {
+    setState(() {
+      _filteredContacts =
+          _contacts.where((contact) => contact.contains(name)).toList();
+    });
+
+    if (_filteredContacts.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.blueGrey,
+          content: Text('Kein Kontakt gefunden',
+              style: TextStyle(fontSize: 16, color: Colors.white)),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.all(30),
+        ), // Abstand nach oben),
+      );
     }
   }
 
@@ -93,15 +112,7 @@ class _ContactViewState extends State<ContactView> {
                   padding: const EdgeInsets.all(35.0),
                   child: TextField(
                     onChanged: (value) {
-                      setState(() {
-                        _filteredContacts = value.isEmpty
-                            ? _contacts
-                            : _contacts
-                                .where((contact) => contact
-                                    .toLowerCase()
-                                    .contains(value.toLowerCase()))
-                                .toList();
-                      });
+                      searchContact(value);
                     },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
