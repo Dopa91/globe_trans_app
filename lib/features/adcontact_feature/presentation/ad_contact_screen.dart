@@ -17,6 +17,10 @@ class ContactScreen extends StatefulWidget {
 class ContactScreenState extends State<ContactScreen> {
   String selectedCountryCode = '+49';
   String selectedCountryName = 'Deutschland';
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +35,31 @@ class ContactScreenState extends State<ContactScreen> {
         backgroundColor: const Color.fromARGB(255, 205, 218, 220),
         actions: <Widget>[
           GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ContactView(
-                            repository: widget.repository,
-                          )));
+            onTap: () async {
+              // Neuen Kontakt hinzufügen
+
+              await widget.repository.addContact(
+                  "${_firstNameController.text} ${_lastNameController.text}",
+                  "email",
+                  "phoneNumber",
+                  "image"); // Hier werden die Neuen Kontakte hinzugefügt
+              // Navigation
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ContactView(
+                    repository: widget.repository,
+                  ),
+                ),
+              );
             },
             child: const Padding(
-              padding: EdgeInsets.only(right: 40),
+              padding: EdgeInsets.only(right: 20),
               child: Center(
                 child: Text(
-                  "Next",
+                  "Speichern",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.green),
                 ),
@@ -58,7 +72,10 @@ class ContactScreenState extends State<ContactScreen> {
         padding: const EdgeInsets.all(50),
         child: Column(
           children: [
-            const TextNameField(),
+            TextNameField(
+              firstNameController: _firstNameController,
+              lastNameController: _lastNameController,
+            ),
             const SizedBox(height: 32),
             Container(
               padding: const EdgeInsets.only(
@@ -78,6 +95,7 @@ class ContactScreenState extends State<ContactScreen> {
                     children: [
                       Expanded(
                         child: TextFormField(
+                          controller: _phoneNumberController,
                           enabled: false,
                           decoration: const InputDecoration(
                             hintText: "Telefon",
@@ -158,6 +176,7 @@ class ContactScreenState extends State<ContactScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: TextFormField(
+                          controller: _phoneNumberController,
                           decoration: const InputDecoration(
                             hintText: "Nummer",
                             hintStyle: TextStyle(
@@ -179,7 +198,9 @@ class ContactScreenState extends State<ContactScreen> {
             const SizedBox(
               height: 30,
             ),
-            const InputEmailField(text: "E-Mail"),
+            const InputEmailField(
+              text: "E-Mail",
+            ),
             const SizedBox(height: 30),
             const LanguageDropdown(text: "Ausgangssprache"),
           ],
