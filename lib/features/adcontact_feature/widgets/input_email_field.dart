@@ -22,6 +22,7 @@ class InputEmailField extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: text,
               hintStyle: const TextStyle(
