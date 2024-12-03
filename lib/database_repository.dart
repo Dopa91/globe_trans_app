@@ -1,3 +1,4 @@
+import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
 
 abstract class DatabaseRepository {
@@ -29,5 +30,19 @@ abstract class DatabaseRepository {
   Future<List<Chat>> getAllChats();
 
   // Kontakte
-  Future<List<String>> getContactList();
+  Future<List<Contact>> getContactList();
+
+  // Kontakte hinzufügen
+  Future<void> addContact(
+      String name, String email, String phoneNumber, String image);
+
+  // Kontakte löschen
+  Future<void> deleteContact(Contact contact);
+
+  // Kontakte Speichern
+  Future<void> saveContactList(List<Contact> contacts);
+
+  // Kontakt Liste anzeigen
+
+  Future<void> getContact(Contact contact);
 }
