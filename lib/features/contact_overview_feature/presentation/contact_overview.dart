@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/database_repository.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
 
 class ContactView extends StatefulWidget {
@@ -17,6 +18,8 @@ class _ContactViewState extends State<ContactView> {
   int selectedPage = 0;
 
   late List<Widget> _pageOptions;
+  final List<String> _contacts = [];
+  List<String> _filteredContacts = [];
 
   @override
   void initState() {
@@ -50,7 +53,10 @@ class _ContactViewState extends State<ContactView> {
           builder: (context) => ContactScreen(
                 repository: widget.repository,
               )),
-    );
+    ).then((_) {
+      // Nach dem Hinzufügen des Kontakts, die Kontaktliste neu laden
+      setState(() {});
+    });
   }
 
   @override
@@ -58,8 +64,7 @@ class _ContactViewState extends State<ContactView> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        automaticallyImplyLeading:
-            false, // Deaktieviert den Back Icon Nicht vergessen ist Wichtig
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
           getAppBarTitle(),
@@ -71,7 +76,7 @@ class _ContactViewState extends State<ContactView> {
         ),
         backgroundColor: backgroundColor,
         scrolledUnderElevation: 0,
-        actions: selectedPage == 0 // Zeige das Icon nur auf der Kontakte-Seite
+        actions: selectedPage == 0
             ? [
                 IconButton(
                   padding: const EdgeInsets.only(right: 35.0),
@@ -79,7 +84,7 @@ class _ContactViewState extends State<ContactView> {
                   onPressed: _addNewContact,
                 ),
               ]
-            : null, // Keine Aktionen auf anderen Seiten / Das darf ich nicht Vergessen wenn ich nächstes mal ein neues Icon hinzufüge das es auf der Nächsten Seite kein Funktion haben darf
+            : null,
       ),
       body: selectedPage == 0
           ? Column(
@@ -87,6 +92,17 @@ class _ContactViewState extends State<ContactView> {
                 Padding(
                   padding: const EdgeInsets.all(35.0),
                   child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        _filteredContacts = value.isEmpty
+                            ? _contacts
+                            : _contacts
+                                .where((contact) => contact
+                                    .toLowerCase()
+                                    .contains(value.toLowerCase()))
+                                .toList();
+                      });
+                    },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 15,
@@ -126,11 +142,20 @@ class _ContactViewState extends State<ContactView> {
                         return const Center(
                             child: Text("Keine Kontakte vorhanden"));
                       } else {
-                        var contactList = snapshot.data;
+                        // Extrahiere die Namen der Kontakte
+                        _contacts.clear();
+                        _contacts.addAll((snapshot.data as List<Contact>)
+                            .map((contact) => contact.name)
+                            .toList());
+
+                        _filteredContacts = _filteredContacts.isEmpty
+                            ? _contacts
+                            : _filteredContacts;
+
                         return ListView.builder(
-                          itemCount: contactList?.length ?? 0,
+                          itemCount: _filteredContacts.length,
                           itemBuilder: (context, index) {
-                            String contactName = contactList![index];
+                            String contactName = _filteredContacts[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 3.0, horizontal: 35.0),
