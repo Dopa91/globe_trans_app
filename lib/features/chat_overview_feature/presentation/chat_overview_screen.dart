@@ -4,11 +4,16 @@ import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.d
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:globe_trans_app/features/shared/name_repo.dart';
 
-class ChatView extends StatelessWidget {
+class ChatView extends StatefulWidget {
   const ChatView({super.key, required this.repository});
 
   final DatabaseRepository repository;
 
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,8 +26,8 @@ class ChatView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               storyItem("assets/statusfoto.jpg", "Mein Status"),
-              storyItem("assets/mertkontaktfoto.jpeg", "Mert"),
-              storyItem("assets/melekkontaktfoto.jpeg", "Melek"),
+              storyItem("assets/mertkontaktfoto.jpeg", "Mert "),
+              storyItem("assets/melekkontaktfoto.jpeg", "Melek "),
               storyItem("assets/direnckontaktfoto.jpeg", "Direnc"),
               storyItem('assets/logo.png', 'Iso'),
               storyItem("assets/yelizkontaktfoto.jpeg", "Yeliz"),
@@ -60,7 +65,7 @@ class ChatView extends StatelessWidget {
                                 (context, animation, secondaryAnimation) =>
                                     ChatScreen(
                               contactName: contactName,
-                              repository: repository,
+                              repository: widget.repository,
                             ),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
