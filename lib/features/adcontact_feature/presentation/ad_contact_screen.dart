@@ -198,8 +198,9 @@ class ContactScreenState extends State<ContactScreen> {
             const SizedBox(
               height: 30,
             ),
-            const InputEmailField(
+            InputEmailField(
               text: "E-Mail",
+              controller: TextEditingController(),
             ),
             const SizedBox(height: 30),
             const LanguageDropdown(text: "Ausgangssprache"),
