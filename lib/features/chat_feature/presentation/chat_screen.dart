@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:intl/intl.dart';
@@ -87,9 +90,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Text("Nachrichten konnten nicht geladen werden."),
                   );
                 } else if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return Center(
+                      child: Platform.isAndroid
+                          ? const CircularProgressIndicator()
+                          : const CupertinoActivityIndicator());
                 }
                 return ListView.builder(
                   itemCount: messages.length,
