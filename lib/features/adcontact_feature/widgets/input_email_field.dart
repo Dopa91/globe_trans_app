@@ -4,6 +4,7 @@ class InputEmailField extends StatelessWidget {
   const InputEmailField({
     super.key,
     required this.text,
+    required TextEditingController controller,
   });
   final String text;
   @override
