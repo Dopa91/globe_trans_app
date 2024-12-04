@@ -8,7 +8,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isClickOn = false;
+  bool isClickOn = true;
 
   @override
   Widget build(BuildContext context) {
