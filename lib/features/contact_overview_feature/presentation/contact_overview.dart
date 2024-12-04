@@ -5,6 +5,7 @@ import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_conta
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:globe_trans_app/settings_screen.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key, required this.repository});
@@ -31,6 +32,7 @@ class _ContactViewState extends State<ContactView> {
       ChatView(
         repository: widget.repository,
       ), // Chat Seite
+      const SettingsScreen(),
       const Placeholder(), // Platzhalter für andere Seite
     ];
   }
@@ -41,6 +43,8 @@ class _ContactViewState extends State<ContactView> {
         return "Meine Kontakte";
       case 1:
         return "Chat Übersicht";
+      case 2:
+        return "Einstellungen";
       default:
         return "Unbekannt";
     }
@@ -54,12 +58,15 @@ class _ContactViewState extends State<ContactView> {
 
     if (_filteredContacts.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.blueGrey,
-          content: Text('Kein Kontakt gefunden',
+        SnackBar(
+          backgroundColor: Colors.black.withOpacity(0.7),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          content: const Text('Kein Kontakt gefunden',
               style: TextStyle(fontSize: 16, color: Colors.white)),
           behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.all(30),
+          margin: const EdgeInsets.all(30),
         ), // Abstand nach oben),
       );
     }
