@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
+import 'package:globe_trans_app/features/setting/presentation/settings_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
-import 'package:globe_trans_app/settings_screen.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key, required this.repository});
@@ -152,7 +155,10 @@ class _ContactViewState extends State<ContactView> {
                     future: widget.repository.getContactList(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
+                        return Center(
+                            child: Platform.isAndroid
+                                ? const CircularProgressIndicator()
+                                : const CupertinoActivityIndicator());
                       } else if (snapshot.hasError) {
                         return const Center(
                             child: Text("Fehler beim Laden der Kontakte"));
