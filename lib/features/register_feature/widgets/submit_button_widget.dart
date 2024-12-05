@@ -5,8 +5,14 @@ import 'package:globe_trans_app/features/register_feature/presentation/verificat
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class SubmitButtonWidget extends StatelessWidget {
-  const SubmitButtonWidget({super.key, required this.repository});
+  const SubmitButtonWidget(
+      {super.key,
+      required this.repository,
+      required this.phoneNumber,
+      required this.countryCode});
   final DatabaseRepository repository;
+  final String phoneNumber;
+  final String countryCode;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,8 @@ class SubmitButtonWidget extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => VerificationScreen(
                         repository: repository,
+                        phoneNumber: phoneNumber,
+                        countryCode: countryCode,
                       )),
             );
           },
