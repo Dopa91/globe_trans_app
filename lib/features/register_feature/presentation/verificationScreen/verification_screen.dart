@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/submit_button_widget_2.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key, required this.repository});
+  const VerificationScreen(
+      {super.key,
+      required this.repository,
+      required this.phoneNumber,
+      required this.countryCode});
   final DatabaseRepository repository;
+  final String phoneNumber;
+  final String countryCode;
 
   @override
   VerificationScreenState createState() => VerificationScreenState();
 }
 
 class VerificationScreenState extends State<VerificationScreen> {
-  String code = "";
+  final TextEditingController phoneNumbercontroller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,33 +44,25 @@ class VerificationScreenState extends State<VerificationScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 16),
-            const Text(
-              "We have sent you an SMS with the code to +49 xxx xxx xxx",
+            Text(
+              "Wir haben Ihnen eine SMS mit dem Code an ${widget.countryCode} ${widget.phoneNumber} gesendet.",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildCodeBox(""),
-                buildCodeBox(""),
-                buildCodeBox(""),
-                buildCodeBox(""),
+                buildCodeBox(),
+                buildCodeBox(),
+                buildCodeBox(),
+                buildCodeBox(),
               ],
             ),
             const SizedBox(height: 16),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ContactScreen(
-                      repository: widget.repository,
-                    ),
-                  ),
-                );
+                _resendVerificationCode("phoneNumber");
               },
               child: const Text(
                 "Resend Code ",
@@ -81,21 +83,31 @@ class VerificationScreenState extends State<VerificationScreen> {
     );
   }
 
-  Widget buildCodeBox(String boxCode) {
+  Widget buildCodeBox() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      padding: const EdgeInsets.all(16.0),
+      width: 40,
+      height: 40,
+      margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
+        border: Border.all(color: Colors.green),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.green, width: 2),
       ),
-      child: Text(
-        boxCode,
-        style: const TextStyle(
-          fontSize: 24,
-          fontWeight: FontWeight.bold,
+      child: const TextField(
+        textAlign: TextAlign.center,
+        keyboardType: TextInputType.number,
+        maxLength: 1,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          counterText: '',
         ),
       ),
+    );
+  }
+
+  void _resendVerificationCode(String phoneNumber) {
+    widget.repository.sendVerificationCode(phoneNumber);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Verification Code Gesendet')),
     );
   }
 }
