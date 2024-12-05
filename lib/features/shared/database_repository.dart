@@ -45,4 +45,7 @@ abstract class DatabaseRepository {
   // Kontakt Liste anzeigen
 
   Future<void> getContact(Contact contact);
+
+// Verification Code
+  void sendVerificationCode(String phoneNumber);
 }
