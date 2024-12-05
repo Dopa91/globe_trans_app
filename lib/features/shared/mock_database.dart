@@ -94,4 +94,12 @@ class MockDatabase implements DatabaseRepository {
     await Future.delayed(const Duration(seconds: 1));
     contacts.add(contact); // bearbeiten erledigt
   }
+
+  // Verification Code
+  @override
+  void sendVerificationCode(String phoneNumber) {
+    Future<void> sendVerificationCode() async {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+  }
 }
