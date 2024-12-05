@@ -15,20 +15,22 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   String selectedCountry = "Germany"; // Standardland Deutschland
-  String? selectedCode;
+  String? selectedCountryCode; //Landesvorwahl
   bool syncContacts = false; // Schalter für Kontakte synchronisieren
+  final TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    selectedCode =
+    selectedCountryCode =
         countryCodes[selectedCountry]; // Standardvorwahl für Deutschland
   }
 
   void _onCountryChanged(String newCountry) {
     setState(() {
+      // Aktualisiere die Anzeige des ausgewählten Landes und die Vorwahl des Landes
       selectedCountry = newCountry;
-      selectedCode = countryCodes[newCountry]; // Aktualisiere Vorwahl
+      selectedCountryCode = countryCodes[newCountry]; // Aktualisiere Vorwahl
     });
   }
 
@@ -55,7 +57,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             const SizedBox(height: 10),
             const Text(
-              "Please confirm your country code and enter your phone number.",
+              "Bitte wählen Sie Ihre Landesvorwahl und geben Sie Ihre Telefonnummer ein.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -86,13 +88,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               ),
               child: Row(
                 children: [
-                  Text(selectedCode ?? '+49',
+                  Text(selectedCountryCode ?? "",
                       style: const TextStyle(fontSize: 16)),
                   const SizedBox(width: 10),
-                  const Expanded(
+                  Expanded(
                     child: TextField(
+                      onChanged: (value) => setState(
+                          () {}), // hier wird der Eingegebene Nummer weitergegeben und im jeweiligen Screen angezeigt
+                      controller: phoneNumberController,
                       keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Your phone number",
                         hintStyle: TextStyle(
@@ -127,6 +132,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: 30),
             SubmitButtonWidget(
               repository: widget.repository,
+              phoneNumber: phoneNumberController.text,
+              countryCode: countryCodes[selectedCountry]!,
             ),
           ],
         ),
