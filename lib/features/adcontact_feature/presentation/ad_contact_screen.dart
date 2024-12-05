@@ -19,7 +19,6 @@ class ContactScreenState extends State<ContactScreen> {
   String selectedCountryName = 'Deutschland';
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-
   final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
@@ -42,7 +41,7 @@ class ContactScreenState extends State<ContactScreen> {
                   "${_firstNameController.text} ${_lastNameController.text}",
                   "email",
                   "phoneNumber",
-                  "image"); // Hier werden die Neuen Kontakte hinzugefügt
+                  "image");
               // Navigation
               await Navigator.push(
                 context,
