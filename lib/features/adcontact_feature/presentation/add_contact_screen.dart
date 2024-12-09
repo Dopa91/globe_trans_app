@@ -7,14 +7,14 @@ import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 import '../repository/country_flag.dart';
 
-class ContactScreen extends StatefulWidget {
-  const ContactScreen({super.key, required this.repository});
+class AddContactScreen extends StatefulWidget {
+  const AddContactScreen({super.key, required this.repository});
   final DatabaseRepository repository;
   @override
-  ContactScreenState createState() => ContactScreenState();
+  AddContactScreenState createState() => AddContactScreenState();
 }
 
-class ContactScreenState extends State<ContactScreen> {
+class AddContactScreenState extends State<AddContactScreen> {
   String selectedCountryCode = '+49';
   String selectedCountryName = 'Deutschland';
   final TextEditingController _firstNameController = TextEditingController();

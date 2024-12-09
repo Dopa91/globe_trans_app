@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/features/register_feature/widgets/submit_button_widget_2.dart';
+import 'package:globe_trans_app/features/register_feature/widgets/verify_button.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -74,7 +74,7 @@ class VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            SubmitButtonWidget2(
+            SubmitButtonWidget2.VerifyButton(
               repository: widget.repository,
             ),
           ],

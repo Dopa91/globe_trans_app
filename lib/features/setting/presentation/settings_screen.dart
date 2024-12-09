@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/setting/widget/change_mobile_number.dart';
-import 'package:globe_trans_app/setting/widget/create_profile.dart';
+import 'package:globe_trans_app/features/setting/widget/change_mobile_number.dart';
+import 'package:globe_trans_app/features/setting/widget/create_profile.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});

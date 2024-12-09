@@ -4,11 +4,12 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/contact_detail_screen.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
+import 'package:globe_trans_app/features/setting/presentation/settings_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
-import 'package:globe_trans_app/setting/presentation/settings_screen.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key, required this.repository});
@@ -55,8 +56,10 @@ class _ContactViewState extends State<ContactView> {
 
   void searchContact(String name) {
     setState(() {
-      _filteredContacts =
-          _contacts.where((contact) => contact.contains(name)).toList();
+      _filteredContacts = _contacts
+          .where(
+              (contact) => contact.toLowerCase().contains(name.toLowerCase()))
+          .toList();
     });
 
     if (_filteredContacts.isEmpty) {
@@ -70,7 +73,7 @@ class _ContactViewState extends State<ContactView> {
               style: TextStyle(fontSize: 16, color: Colors.white)),
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.all(30),
-        ), // Abstand nach oben),
+        ),
       );
     }
   }
@@ -79,13 +82,23 @@ class _ContactViewState extends State<ContactView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ContactScreen(
+          builder: (context) => AddContactScreen(
                 repository: widget.repository,
               )),
     ).then((_) {
       // Nach dem Hinzufügen des Kontakts, die Kontaktliste neu laden
       setState(() {});
     });
+  }
+
+  void _navigateToContactDetail(String contact) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ContactDetailScreen(
+            contact: contact, repository: widget.repository),
+      ),
+    );
   }
 
   @override
@@ -219,6 +232,8 @@ class _ContactViewState extends State<ContactView> {
                                       fontSize: 14,
                                     ),
                                   ),
+                                  onTap: () =>
+                                      _navigateToContactDetail(contactName),
                                 ),
                               ),
                             );

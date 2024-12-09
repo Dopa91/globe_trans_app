@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/ad_contact_screen.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
@@ -27,7 +27,7 @@ class SubmitButtonWidget2 extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ContactScreen(
+                  builder: (context) => AddContactScreen(
                         repository: repository,
                       )),
             );
