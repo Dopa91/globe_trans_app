@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/input_email_field.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/language_dropdown.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
-import 'package:globe_trans_app/features/contact_overview_feature/presentation/contact_overview.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 import '../repository/country_flag.dart';
@@ -43,13 +42,10 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                   "email",
                   "phoneNumber",
                   "image");
-              // Navigation
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ContactView(
-                    repository: widget.repository,
-                  ),
+              // Bestätigungsmeldung anzeigen
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Änderungen gespeichert'),
                 ),
               );
             },
