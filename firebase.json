@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"ios":{"default":{"projectId":"globetransmessage","appId":"1:380969733195:ios:9bc5ace12763ff03a1d1ce","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"globetransmessage","configurations":{"ios":"1:380969733195:ios:9bc5ace12763ff03a1d1ce"}}}}}}
