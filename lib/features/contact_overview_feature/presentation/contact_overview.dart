@@ -29,6 +29,8 @@ class _ContactViewState extends State<ContactView> {
   @override
   void initState() {
     super.initState();
+    context.read<DatabaseRepository>().getContactList();
+
     _pageOptions = [
       const ContactView(), // Kontakte Seite
       const ChatView(), // Chat Seite

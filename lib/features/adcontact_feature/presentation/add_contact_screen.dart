@@ -37,13 +37,13 @@ class AddContactScreenState extends State<AddContactScreen> {
         backgroundColor: const Color.fromARGB(255, 205, 218, 220),
         actions: <Widget>[
           GestureDetector(
-            onTap: () async {
+            onTap: () {
               // Neuen Kontakt hinzufügen
 
-              await context.read<DatabaseRepository>().addContact(
+              context.read<DatabaseRepository>().addContact(
                   "${_firstNameController.text} ${_lastNameController.text}",
                   "email",
-                  "phoneNumber",
+                  "$_phoneNumberController",
                   "image");
               // Navigation
               Navigator.push(

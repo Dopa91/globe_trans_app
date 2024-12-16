@@ -22,7 +22,7 @@ void main() async {
 
   runApp(MultiProvider(providers: [
     Provider<DatabaseRepository>(
-      create: (context) => FirebaseDatabaseRepository(),
+      create: (_) => FirebaseDatabaseRepository(),
     )
   ], child: MyApp()));
 }
