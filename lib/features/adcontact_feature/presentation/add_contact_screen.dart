@@ -46,12 +46,10 @@ class AddContactScreenState extends State<AddContactScreen> {
                   "phoneNumber",
                   "image");
               // Navigation
-              await Navigator.push(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ContactView(
-                      //repository: widget.repository,
-                      ),
+                  builder: (context) => const ContactView(),
                 ),
               );
             },

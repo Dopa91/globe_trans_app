@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/themes.dart';
 import 'package:globe_trans_app/features/register_feature/presentation/homescreen/home_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
-import 'package:globe_trans_app/features/shared/mock_database.dart';
+import 'package:globe_trans_app/features/shared/firebase_database_repository.dart';
 import 'package:globe_trans_app/firebase_options.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +19,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //final repository = MockDatabase();
+
   runApp(MultiProvider(providers: [
     Provider<DatabaseRepository>(
-      create: (context) => MockDatabase(),
+      create: (context) => FirebaseDatabaseRepository(),
     )
   ], child: MyApp()));
 }

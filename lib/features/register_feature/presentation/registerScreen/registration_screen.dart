@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
+import 'package:globe_trans_app/features/register_feature/presentation/verificationScreen/verification_screen.dart';
 import 'package:globe_trans_app/features/register_feature/repository/country_class.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/country_select.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/register_button.dart';
@@ -50,15 +52,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     try {
       // Sende den Verifizierungscode
-      context.read<DatabaseRepository>();
-      (fullPhoneNumber);
+      await context
+          .read<DatabaseRepository>()
+          .sendVerificationCode(fullPhoneNumber);
 
       // Weiterleitung zur SMS-Code-Eingabeseite
-      Navigator.pushNamed(
-        context,
-        "/verifyCode", // Route zur Code-Eingabeseite
-        arguments: {'phoneNumber': fullPhoneNumber},
-      );
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => VerificationScreen(
+                  phoneNumber: phoneNumber,
+                  countryCode: selectedCountryCode ??
+                      "+49")) // Route zur Code-Eingabeseite
+
+          );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Fehler bei der Verifizierung: $e")),
@@ -163,6 +170,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               countryCode: countryCodes[selectedCountry]!,
               onPressed: _startVerification,
             ),
+            TextButton(
+              onPressed: () async {
+                await context.read<DatabaseRepository>().signInWithGoogle();
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const AddContactScreen(),
+                ));
+              },
+              child: const Text("Register with Google"),
+            )
           ],
         ),
       ),

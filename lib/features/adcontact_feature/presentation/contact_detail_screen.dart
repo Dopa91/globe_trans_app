@@ -36,7 +36,6 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
           GestureDetector(
             onTap: () async {
               // Neuen Kontakt hinzufügen
-
               await context.read<DatabaseRepository>().addContact(
                   "${_firstNameController.text} ${_lastNameController.text}",
                   "email",

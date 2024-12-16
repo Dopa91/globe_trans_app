@@ -48,4 +48,8 @@ abstract class DatabaseRepository {
 
 // Verification Code
   Future<void> sendVerificationCode(String phoneNumber);
+
+  // Sign Google
+
+  Future<void> signInWithGoogle();
 }

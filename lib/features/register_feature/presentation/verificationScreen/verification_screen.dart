@@ -88,7 +88,7 @@ class VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            SubmitButtonWidget2.VerifyButton(),
+            const SubmitButtonWidget2.VerifyButton(),
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class MockDatabase implements DatabaseRepository {
   final List<Message> _messages = [];
@@ -99,20 +100,36 @@ class MockDatabase implements DatabaseRepository {
   // Verification Code
   @override
   Future<void> sendVerificationCode(String phoneNumber) async {
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        FirebaseAuth.instance.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        throw Exception("Fehler bei der Verifizierung: ${e.message}");
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        print("Code gesendet: $verificationId");
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        print("Auto-Retrieval Timeout: $verificationId");
-      },
-    );
+    // await FirebaseAuth.instance.verifyPhoneNumber(
+    //   phoneNumber: phoneNumber,
+    //   verificationCompleted: (PhoneAuthCredential credential) {
+    //     FirebaseAuth.instance.signInWithCredential(credential);
+    //   },
+    //   verificationFailed: (FirebaseAuthException e) {
+    //     throw Exception("Fehler bei der Verifizierung: ${e.message}");
+    //   },
+    //   codeSent: (String verificationId, int? resendToken) {
+    //     print("Code gesendet: $verificationId");
+    //   },
+    //   codeAutoRetrievalTimeout: (String verificationId) {
+    //     print("Auto-Retrieval Timeout: $verificationId");
+    //   },
+    // );
+  }
+
+  @override
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      print('exception->$e');
+    }
   }
 }
