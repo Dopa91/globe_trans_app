@@ -4,10 +4,10 @@ import 'package:globe_trans_app/features/register_feature/repository/country_cla
 import 'package:globe_trans_app/features/register_feature/widgets/country_select.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/register_button.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key, required this.repository});
-  final DatabaseRepository repository;
+  const RegistrationScreen({super.key});
 
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -17,6 +17,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String selectedCountry = "Germany"; // Standardland Deutschland
   String? selectedCountryCode; //Landesvorwahl
   bool syncContacts = false; // Schalter für Kontakte synchronisieren
+
   final TextEditingController phoneNumberController = TextEditingController();
 
   @override
@@ -32,6 +33,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       selectedCountry = newCountry;
       selectedCountryCode = countryCodes[newCountry]; // Aktualisiere Vorwahl
     });
+  }
+
+  void _startVerification() async {
+    // Validiere Telefonnummer
+    final phoneNumber = phoneNumberController.text.trim();
+    if (phoneNumber.isEmpty || selectedCountryCode == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text("Bitte geben Sie eine gültige Telefonnummer ein.")),
+      );
+      return;
+    }
+
+    final fullPhoneNumber = '$selectedCountryCode$phoneNumber';
+
+    try {
+      // Sende den Verifizierungscode
+      context.read<DatabaseRepository>();
+      (fullPhoneNumber);
+
+      // Weiterleitung zur SMS-Code-Eingabeseite
+      Navigator.pushNamed(
+        context,
+        "/verifyCode", // Route zur Code-Eingabeseite
+        arguments: {'phoneNumber': fullPhoneNumber},
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Fehler bei der Verifizierung: $e")),
+      );
+    }
   }
 
   @override
@@ -63,11 +95,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 fontSize: 16,
                 color: Colors.black54,
               ),
-              // style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(height: 30),
-            // Hier wird der CountrySelect Widget verwendet
-
             CountrySelect(
               selectedCountry: selectedCountry,
               onCountryChanged: _onCountryChanged,
@@ -93,8 +122,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: TextField(
-                      onChanged: (value) => setState(
-                          () {}), // hier wird der Eingegebene Nummer weitergegeben und im jeweiligen Screen angezeigt
+                      onChanged: (value) => setState(() {}),
                       controller: phoneNumberController,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
@@ -131,9 +159,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             const SizedBox(height: 30),
             RegisterButton(
-              repository: widget.repository,
               phoneNumber: phoneNumberController.text,
               countryCode: countryCodes[selectedCountry]!,
+              onPressed: _startVerification,
             ),
           ],
         ),

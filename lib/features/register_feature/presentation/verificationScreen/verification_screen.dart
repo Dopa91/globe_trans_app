@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/verify_button.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:provider/provider.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen(
-      {super.key,
-      required this.repository,
-      required this.phoneNumber,
-      required this.countryCode});
-  final DatabaseRepository repository;
+      {super.key, required this.phoneNumber, required this.countryCode});
+
   final String phoneNumber;
   final String countryCode;
 
@@ -22,6 +20,20 @@ class VerificationScreenState extends State<VerificationScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneNumbercontroller.dispose();
+    super.dispose();
+  }
+
+  void _resendVerificationCode(String phoneNumber) {
+    context.read<DatabaseRepository>();
+    (phoneNumber);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Verification Code Gesendet')),
+    );
   }
 
   @override
@@ -57,6 +69,8 @@ class VerificationScreenState extends State<VerificationScreen> {
                 buildCodeBox(),
                 buildCodeBox(),
                 buildCodeBox(),
+                buildCodeBox(),
+                buildCodeBox(),
               ],
             ),
             const SizedBox(height: 16),
@@ -74,9 +88,7 @@ class VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            SubmitButtonWidget2.VerifyButton(
-              repository: widget.repository,
-            ),
+            SubmitButtonWidget2.VerifyButton(),
           ],
         ),
       ),
@@ -87,7 +99,7 @@ class VerificationScreenState extends State<VerificationScreen> {
     return Container(
       width: 40,
       height: 40,
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 3),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.green),
         borderRadius: BorderRadius.circular(8),
@@ -101,13 +113,6 @@ class VerificationScreenState extends State<VerificationScreen> {
           counterText: '',
         ),
       ),
-    );
-  }
-
-  void _resendVerificationCode(String phoneNumber) {
-    widget.repository.sendVerificationCode(phoneNumber);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Verification Code Gesendet')),
     );
   }
 }

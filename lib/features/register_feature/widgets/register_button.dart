@@ -2,17 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/register_feature/presentation/verificationScreen/verification_screen.dart';
-import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class RegisterButton extends StatelessWidget {
-  const RegisterButton(
-      {super.key,
-      required this.repository,
-      required this.phoneNumber,
-      required this.countryCode});
-  final DatabaseRepository repository;
+  const RegisterButton({
+    super.key,
+    required this.phoneNumber,
+    required this.countryCode,
+    required this.onPressed,
+  });
+
   final String phoneNumber;
   final String countryCode;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +31,11 @@ class RegisterButton extends StatelessWidget {
             elevation: 10,
           ),
           onPressed: () {
+            onPressed();
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => VerificationScreen(
-                        repository: repository,
                         phoneNumber: phoneNumber,
                         countryCode: countryCode,
                       )),

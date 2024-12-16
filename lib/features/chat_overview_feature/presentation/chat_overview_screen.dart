@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
-import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:globe_trans_app/features/shared/name_repo.dart';
 
 class ChatView extends StatefulWidget {
-  const ChatView({super.key, required this.repository});
-
-  final DatabaseRepository repository;
+  const ChatView({
+    super.key,
+  });
 
   @override
   State<ChatView> createState() => _ChatViewState();
@@ -65,7 +64,6 @@ class _ChatViewState extends State<ChatView> {
                                 (context, animation, secondaryAnimation) =>
                                     ChatScreen(
                               contactName: contactName,
-                              repository: widget.repository,
                             ),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {

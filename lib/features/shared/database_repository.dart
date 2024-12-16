@@ -47,5 +47,5 @@ abstract class DatabaseRepository {
   Future<void> getContact(Contact contact);
 
 // Verification Code
-  void sendVerificationCode(String phoneNumber);
+  Future<void> sendVerificationCode(String phoneNumber);
 }

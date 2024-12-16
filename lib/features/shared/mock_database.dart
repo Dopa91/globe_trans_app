@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
@@ -97,9 +98,21 @@ class MockDatabase implements DatabaseRepository {
 
   // Verification Code
   @override
-  void sendVerificationCode(String phoneNumber) {
-    Future<void> sendVerificationCode() async {
-      await Future.delayed(const Duration(seconds: 1));
-    }
+  Future<void> sendVerificationCode(String phoneNumber) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) {
+        FirebaseAuth.instance.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        throw Exception("Fehler bei der Verifizierung: ${e.message}");
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        print("Code gesendet: $verificationId");
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        print("Auto-Retrieval Timeout: $verificationId");
+      },
+    );
   }
 }

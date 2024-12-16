@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
-import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
-  const SubmitButtonWidget2.VerifyButton({super.key, required this.repository});
-  final DatabaseRepository repository;
+  const SubmitButtonWidget2.VerifyButton({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,8 @@ class SubmitButtonWidget2 extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => AddContactScreen(
-                        repository: repository,
+                  builder: (context) => const AddContactScreen(
+                      //repository: repository,
                       )),
             );
           },

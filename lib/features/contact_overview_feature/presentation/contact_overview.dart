@@ -10,10 +10,10 @@ import 'package:globe_trans_app/features/adcontact_feature/presentation/contact_
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
 import 'package:globe_trans_app/features/setting/presentation/settings_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:provider/provider.dart';
 
 class ContactView extends StatefulWidget {
-  const ContactView({super.key, required this.repository});
-  final DatabaseRepository repository;
+  const ContactView({super.key});
 
   @override
   _ContactViewState createState() => _ContactViewState();
@@ -30,12 +30,8 @@ class _ContactViewState extends State<ContactView> {
   void initState() {
     super.initState();
     _pageOptions = [
-      ContactView(
-        repository: widget.repository,
-      ), // Kontakte Seite
-      ChatView(
-        repository: widget.repository,
-      ), // Chat Seite
+      const ContactView(), // Kontakte Seite
+      const ChatView(), // Chat Seite
       const SettingsScreen(),
       const Placeholder(), // Platzhalter für andere Seite
     ];
@@ -81,10 +77,7 @@ class _ContactViewState extends State<ContactView> {
   void _addNewContact() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => AddContactScreen(
-                repository: widget.repository,
-              )),
+      MaterialPageRoute(builder: (context) => const AddContactScreen()),
     ).then((_) {
       // Nach dem Hinzufügen des Kontakts, die Kontaktliste neu laden
       setState(() {});
@@ -96,7 +89,8 @@ class _ContactViewState extends State<ContactView> {
       context,
       MaterialPageRoute(
         builder: (context) => ContactDetailScreen(
-            contact: contact, repository: widget.repository),
+          contact: contact,
+        ),
       ),
     );
   }
@@ -165,7 +159,7 @@ class _ContactViewState extends State<ContactView> {
                 ),
                 Expanded(
                   child: FutureBuilder(
-                    future: widget.repository.getContactList(),
+                    future: context.read<DatabaseRepository>().getContactList(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(

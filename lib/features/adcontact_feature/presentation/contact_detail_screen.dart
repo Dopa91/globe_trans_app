@@ -3,13 +3,13 @@ import 'package:globe_trans_app/features/adcontact_feature/widgets/input_email_f
 import 'package:globe_trans_app/features/adcontact_feature/widgets/language_dropdown.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:provider/provider.dart';
 
 import '../repository/country_flag.dart';
 
 class ContactDetailScreen extends StatefulWidget {
-  const ContactDetailScreen(
-      {super.key, required this.repository, required String contact});
-  final DatabaseRepository repository;
+  const ContactDetailScreen({super.key, required String contact});
+
   @override
   ContactDetailScreenState createState() => ContactDetailScreenState();
 }
@@ -37,7 +37,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
             onTap: () async {
               // Neuen Kontakt hinzufügen
 
-              await widget.repository.addContact(
+              await context.read<DatabaseRepository>().addContact(
                   "${_firstNameController.text} ${_lastNameController.text}",
                   "email",
                   "phoneNumber",

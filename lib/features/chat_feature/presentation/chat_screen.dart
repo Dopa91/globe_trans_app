@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/chat_feature/widget/message_bubble.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:provider/provider.dart';
 
 class Message {
   final String text;
@@ -22,10 +23,10 @@ class Chat {
 class ChatScreen extends StatefulWidget {
   final String contactName;
 
-  const ChatScreen(
-      {super.key, required this.contactName, required this.repository});
-
-  final DatabaseRepository repository;
+  const ChatScreen({
+    super.key,
+    required this.contactName,
+  });
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -83,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
           const SizedBox(height: 20),
           Expanded(
             child: FutureBuilder(
-              future: widget.repository.getAllMessages(),
+              future: context.read<DatabaseRepository>().getAllMessages(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return const Center(
@@ -134,7 +135,7 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: const Icon(Icons.send, color: Colors.green),
               onPressed: () async {
                 if (_controller.text.isNotEmpty) {
-                  await widget.repository.sendMessage(
+                  await context.read<DatabaseRepository>().sendMessage(
                       Message(_controller.text, true, DateTime.now()));
                   setState(() {
                     messages

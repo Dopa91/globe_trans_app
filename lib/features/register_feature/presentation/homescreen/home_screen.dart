@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/register_feature/presentation/registerScreen/registration_screen.dart';
-import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 import '../../../../config/themes.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key, required this.repository});
-  final DatabaseRepository repository;
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,9 +61,7 @@ class HomeScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => RegistrationScreen(
-                              repository: repository,
-                            )),
+                        builder: (context) => const RegistrationScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(

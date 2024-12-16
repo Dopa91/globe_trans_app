@@ -4,12 +4,15 @@ import 'package:globe_trans_app/features/adcontact_feature/widgets/language_drop
 import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
 import 'package:globe_trans_app/features/contact_overview_feature/presentation/contact_overview.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:provider/provider.dart';
 
 import '../repository/country_flag.dart';
 
 class AddContactScreen extends StatefulWidget {
-  const AddContactScreen({super.key, required this.repository});
-  final DatabaseRepository repository;
+  const AddContactScreen({
+    super.key,
+  });
+
   @override
   AddContactScreenState createState() => AddContactScreenState();
 }
@@ -37,7 +40,7 @@ class AddContactScreenState extends State<AddContactScreen> {
             onTap: () async {
               // Neuen Kontakt hinzufügen
 
-              await widget.repository.addContact(
+              await context.read<DatabaseRepository>().addContact(
                   "${_firstNameController.text} ${_lastNameController.text}",
                   "email",
                   "phoneNumber",
@@ -46,9 +49,9 @@ class AddContactScreenState extends State<AddContactScreen> {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ContactView(
-                    repository: widget.repository,
-                  ),
+                  builder: (context) => const ContactView(
+                      //repository: widget.repository,
+                      ),
                 ),
               );
             },
