@@ -135,8 +135,6 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: const Icon(Icons.send, color: Colors.green),
               onPressed: () async {
                 if (_controller.text.isNotEmpty) {
-                  await context.read<DatabaseRepository>().sendMessage(
-                      Message(_controller.text, true, DateTime.now()));
                   setState(() {
                     messages
                         .add(Message(_controller.text, true, DateTime.now()));

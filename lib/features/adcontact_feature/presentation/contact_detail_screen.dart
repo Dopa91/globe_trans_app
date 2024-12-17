@@ -106,7 +106,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                       ),
                       const SizedBox(width: 10),
                       Padding(
-                        padding: const EdgeInsets.only(right: 120),
+                        padding: const EdgeInsets.only(right: 100),
                         child: Text(
                           selectedCountryName,
                           style: const TextStyle(

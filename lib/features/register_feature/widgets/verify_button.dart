@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
-  const SubmitButtonWidget2.VerifyButton({
+  const SubmitButtonWidget2.verifyButton({
     super.key,
   });
 

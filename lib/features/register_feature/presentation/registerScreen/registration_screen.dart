@@ -52,9 +52,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     try {
       // Sende den Verifizierungscode
-      await context
-          .read<DatabaseRepository>()
-          .sendVerificationCode(fullPhoneNumber);
+      context.read<DatabaseRepository>().sendVerificationCode(fullPhoneNumber);
 
       // Weiterleitung zur SMS-Code-Eingabeseite
       Navigator.push(
@@ -171,8 +169,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onPressed: _startVerification,
             ),
             TextButton(
-              onPressed: () async {
-                await context.read<DatabaseRepository>().signInWithGoogle();
+              onPressed: () {
+                context.read<DatabaseRepository>().signInWithGoogle();
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const AddContactScreen(),
                 ));

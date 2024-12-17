@@ -10,7 +10,8 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
   Future<void> addContact(
       String name, String email, String phoneNumber, String image) async {
     final firestore = FirebaseFirestore.instance;
-    await firestore.collection('contacts').add({
+    String userId = await getUserId();
+    await firestore.collection("users").doc(userId).collection('contacts').add({
       'name': name,
       'email': email,
       'phoneNumber': phoneNumber,
@@ -18,23 +19,33 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
     });
   }
 
-  @override
-  Future<void> createChat(Message message, String receiver) {
-    // TODO: implement createChat
-    throw UnimplementedError();
+  Future<String> getUserId() async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      User? user = auth.currentUser;
+      if (user != null) {
+        return user.uid;
+      } else {
+        print('Kein authentifizierter Benutzer gefunden.');
+        return '';
+      }
+    } catch (e) {
+      print('Fehler beim Abrufen der Benutzer-ID: $e');
+      return '';
+    }
   }
 
+  // chat erstellen
   @override
-  Future<void> deleteContact(Contact contact) {
-    // TODO: implement deleteContact
-    throw UnimplementedError();
-  }
+  Future<void> createChat(Message message, String receiver) async {}
 
+  // Kontakt löschen
   @override
-  Future<void> deleteMessage(Message message) {
-    // TODO: implement deleteMessage
-    throw UnimplementedError();
-  }
+  Future<void> deleteContact(Contact contact) async {}
+
+  // Nachricht löschen
+  @override
+  Future<void> deleteMessage(Message message) async {}
 
   @override
   Future<List<Chat>> getAllChats() {
@@ -42,49 +53,48 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
     throw UnimplementedError();
   }
 
+  final List<Message> _messages = [];
+
+  // Liste aller Nachrichen
   @override
-  Future<List<Message>> getAllMessages() {
-    // TODO: implement getAllMessages
-    throw UnimplementedError();
+  Future<List<Message>> getAllMessages() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return List.unmodifiable(_messages);
   }
 
   @override
-  Future<void> getContact(Contact contact) async {
-    // TODO: implement getContact
-    throw UnimplementedError();
-  }
+  Future<void> getContact(Contact contact) async {}
 
+  // Kontakt Liste
   @override
   Future<List<Contact>> getContactList() async {
     final firestore = FirebaseFirestore.instance;
-    final snapshot = await firestore.collection('contacts').get();
+    String userId = await getUserId();
+    final snapshot = await firestore
+        .collection("users")
+        .doc(userId)
+        .collection("contacts")
+        .get();
     return snapshot.docs
         .map((doc) => Contact(
-              name: doc['name'],
-              email: doc['email'],
-              phoneNumber: doc['phoneNumber'],
-              image: doc['image'],
-            ))
+            name: doc["name"],
+            email: doc["email"],
+            phoneNumber: doc["phoneNumber"],
+            image: doc["image"]))
         .toList();
   }
 
+  // GruppenChat Liste
   @override
-  Future<void> newGroupChat(List<Message> messages) {
-    // TODO: implement newGroupChat
-    throw UnimplementedError();
-  }
+  Future<void> newGroupChat(List<Message> messages) async {}
 
+  // Kontakte Speichern
   @override
-  Future<void> saveContactList(List<Contact> contacts) {
-    // TODO: implement saveContactList
-    throw UnimplementedError();
-  }
+  Future<void> saveContactList(List<Contact> contacts) async {}
 
+  // Nachricht senden
   @override
-  Future<void> sendMessage(Message message) {
-    // TODO: implement sendMessage
-    throw UnimplementedError();
-  }
+  Future<void> sendMessage(Message message) async {}
 
   // Verification Code
 
