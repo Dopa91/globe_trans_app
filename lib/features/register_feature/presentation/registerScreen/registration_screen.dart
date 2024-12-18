@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:globe_trans_app/config/colors.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
 import 'package:globe_trans_app/features/register_feature/presentation/verificationScreen/verification_screen.dart';
@@ -130,6 +131,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       onChanged: (value) => setState(() {}),
                       controller: phoneNumberController,
                       keyboardType: TextInputType.phone,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: "Your phone number",
