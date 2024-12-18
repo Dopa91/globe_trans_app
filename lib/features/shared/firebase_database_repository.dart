@@ -41,7 +41,16 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
 
   // Kontakt löschen
   @override
-  Future<void> deleteContact(Contact contact) async {}
+  Future<void> deleteContact(Contact contact) async {
+    final firestore = FirebaseFirestore.instance;
+    String userId = await getUserId();
+    await firestore
+        .collection("users")
+        .doc(userId)
+        .collection("contacts")
+        .doc(contact.name)
+        .delete();
+  }
 
   // Nachricht löschen
   @override
@@ -117,17 +126,6 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
     );
   }
 
-  // @override
-  // Future<void> _startVerification(TextEditingController phoneNumberController, String? selectedCountry) async {
-  //   // Validiere Telefonnummer
-  //   final phoneNumber = phoneNumberController.text.trim();
-  //   if (phoneNumber.isEmpty || selectedCountry == null) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //           content: Text("Bitte geben Sie eine gültige Telefonnummer ein.")),
-  //     );
-  //     return;
-  //   }
   @override
   Future<void> updateMessage(
       Message message, String newContent, String newTimeStamp) {
