@@ -132,7 +132,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       controller: phoneNumberController,
                       keyboardType: TextInputType.phone,
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly,
+                        // Eingabeformat für Telefonnummer
+                        FilteringTextInputFormatter
+                            .digitsOnly, // Nur Zahlen erlaubt
                       ],
                       decoration: const InputDecoration(
                         border: InputBorder.none,
