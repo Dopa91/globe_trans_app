@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^4.0.0
-  convex_bottom_bar: ^3.0.0
+  convex_bottom_bar: ^3.2.0
   intl: ^0.18.1
   shared_preferences: ^2.0.6
   image_picker: ^1.1.2
@@ -45,6 +45,7 @@ flutter:
     - assets/flags/flag_belgium.png
     - assets/flags/flag_italy.png
     - assets/flags/flag_poland.png
+    - assets/gif/Dennis_gif_kleiner.gif
 
   fonts:
     - family: SFProDisplay
