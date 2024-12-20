@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/verify_button.dart';
-import 'package:globe_trans_app/features/shared/database_repository.dart';
-import 'package:provider/provider.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen(
@@ -17,6 +15,20 @@ class VerificationScreen extends StatefulWidget {
 class VerificationScreenState extends State<VerificationScreen> {
   final TextEditingController phoneNumbercontroller = TextEditingController();
 
+  final TextEditingController sms1 = TextEditingController();
+  final TextEditingController sms2 = TextEditingController();
+  final TextEditingController sms3 = TextEditingController();
+  final TextEditingController sms4 = TextEditingController();
+  final TextEditingController sms5 = TextEditingController();
+  final TextEditingController sms6 = TextEditingController();
+
+  String getFullSmsCode() {
+    String smscode =
+        sms1.text + sms2.text + sms3.text + sms4.text + sms5.text + sms6.text;
+    print("SMS: $smscode");
+    return smscode;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,8 +41,8 @@ class VerificationScreenState extends State<VerificationScreen> {
   }
 
   void _resendVerificationCode(String phoneNumber) {
-    context.read<DatabaseRepository>();
-    (phoneNumber);
+    /*context.read<DatabaseRepository>();
+    (phoneNumber);*/
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Verification Code Gesendet')),
     );
@@ -65,12 +77,12 @@ class VerificationScreenState extends State<VerificationScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildCodeBox(),
-                buildCodeBox(),
-                buildCodeBox(),
-                buildCodeBox(),
-                buildCodeBox(),
-                buildCodeBox(),
+                buildCodeBox(sms1),
+                buildCodeBox(sms2),
+                buildCodeBox(sms3),
+                buildCodeBox(sms4),
+                buildCodeBox(sms5),
+                buildCodeBox(sms6),
               ],
             ),
             const SizedBox(height: 16),
@@ -88,14 +100,14 @@ class VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             const SizedBox(height: 40),
-            const SubmitButtonWidget2.verifyButton(),
+            SubmitButtonWidget2.verifyButton(smsCode: getFullSmsCode()),
           ],
         ),
       ),
     );
   }
 
-  Widget buildCodeBox() {
+  Widget buildCodeBox(TextEditingController smsController) {
     return Container(
       width: 40,
       height: 40,
@@ -104,11 +116,12 @@ class VerificationScreenState extends State<VerificationScreen> {
         border: Border.all(color: Colors.green),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const TextField(
+      child: TextField(
+        controller: smsController,
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         maxLength: 1,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: InputBorder.none,
           counterText: '',
         ),
