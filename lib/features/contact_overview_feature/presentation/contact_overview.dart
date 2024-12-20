@@ -4,16 +4,16 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/config/colors.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/contact_detail_screen.dart';
 import 'package:globe_trans_app/features/chat_overview_feature/presentation/chat_overview_screen.dart';
+import 'package:globe_trans_app/features/contact_detail/presentation/contact_detail_screen.dart';
 import 'package:globe_trans_app/features/setting/presentation/settings_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:provider/provider.dart';
 
 class ContactView extends StatefulWidget {
-  const ContactView({super.key});
+  final int startPage;
+  const ContactView({super.key, this.startPage = 0});
 
   @override
   _ContactViewState createState() => _ContactViewState();
@@ -28,6 +28,7 @@ class _ContactViewState extends State<ContactView> {
 
   @override
   void initState() {
+    selectedPage = widget.startPage;
     super.initState();
     context.read<DatabaseRepository>().getContactList();
 
@@ -79,7 +80,8 @@ class _ContactViewState extends State<ContactView> {
   void _addNewContact() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const AddContactScreen()),
+      MaterialPageRoute(
+          builder: (context) => const ContactDetailScreen(contact: '')),
     ).then((_) {
       // Nach dem Hinzufügen des Kontakts, die Kontaktliste neu laden
       setState(() {});
