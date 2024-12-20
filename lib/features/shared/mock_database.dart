@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class MockDatabase implements DatabaseRepository {
   final List<Message> _messages = [];
@@ -10,24 +8,21 @@ class MockDatabase implements DatabaseRepository {
   List<String> saveNames = [];
   List<Contact> contacts = [];
 
-  // @override
-  // Future<void> getMessage(Message message) async {
-  //   await Future.delayed(const Duration(seconds: 1));
-  //   _messages.add(message);
-  // }
-
+  // Sende Nachrichten
   @override
   Future<void> sendMessage(Message message) async {
     await Future.delayed(
         const Duration(seconds: 1), () => _messages.add(message));
   }
 
+  // Löschen einer Nachricht
   @override
   Future<void> deleteMessage(Message message) async {
     await Future.delayed(const Duration(seconds: 1));
     _messages.remove(message);
   }
 
+  // Update einer Nachricht
   @override
   Future<void> updateMessage(
       Message message, String newContent, String newTimeStamp) async {
@@ -38,37 +33,42 @@ class MockDatabase implements DatabaseRepository {
     }
   }
 
+  // Übersicht aller Nachrichten
   @override
   Future<List<Message>> getAllMessages() async {
     await Future.delayed(const Duration(seconds: 1));
     return List.unmodifiable(_messages);
   }
 
+  // Neue Chat Gruppe erstellen
   @override
   Future<void> newGroupChat(List<Message> messages) async {
     await Future.delayed(const Duration(seconds: 1));
     _chats.add(Chat(messages));
   }
 
+  // Neue Chat erstellen
   @override
   Future<void> createChat(Message message, String receiver) async {
     await Future.delayed(const Duration(seconds: 1));
     _chats.add(Chat([message]));
   }
 
+  // Übersicht aller Chats
   @override
   Future<List<Chat>> getAllChats() async {
     await Future.delayed(const Duration(seconds: 1));
     return _chats;
   }
 
-  // Kontakte
+  // Kontakte abrufen
   @override
   Future<List<Contact>> getContactList() async {
     await Future.delayed(const Duration(seconds: 1));
-    return contacts; // bearbeiten erledigt
+    return contacts;
   }
 
+  // Kontakt hinzufügen
   @override
   Future<void> addContact(
       String name, String email, String phoneNumber, String image) async {
@@ -76,60 +76,26 @@ class MockDatabase implements DatabaseRepository {
         name: name, email: email, phoneNumber: phoneNumber, image: image);
     contacts.add(newContact);
     return Future.value();
-    // bearbeiten erledigt
   }
 
+  // Kontakt löschen
   @override
   Future<void> deleteContact(Contact contact) async {
     await Future.delayed(const Duration(seconds: 1));
-    contacts.remove(contact); // bearbeiten erledigt
+    contacts.remove(contact);
   }
 
+  // Kontaktliste speichern
   @override
   Future<void> saveContactList(List<Contact> newContacts) async {
     await Future.delayed(const Duration(seconds: 1));
-    contacts = newContacts; // bearbeiten erledigt
+    contacts = newContacts;
   }
 
+  // Kontakt anzeigen
   @override
   Future<void> getContact(Contact contact) async {
     await Future.delayed(const Duration(seconds: 1));
-    contacts.add(contact); // bearbeiten erledigt
-  }
-
-  // Verification Code
-  @override
-  Future<void> sendVerificationCode(String phoneNumber) async {
-    // await FirebaseAuth.instance.verifyPhoneNumber(
-    //   phoneNumber: phoneNumber,
-    //   verificationCompleted: (PhoneAuthCredential credential) {
-    //     FirebaseAuth.instance.signInWithCredential(credential);
-    //   },
-    //   verificationFailed: (FirebaseAuthException e) {
-    //     throw Exception("Fehler bei der Verifizierung: ${e.message}");
-    //   },
-    //   codeSent: (String verificationId, int? resendToken) {
-    //     print("Code gesendet: $verificationId");
-    //   },
-    //   codeAutoRetrievalTimeout: (String verificationId) {
-    //     print("Auto-Retrieval Timeout: $verificationId");
-    //   },
-    // );
-  }
-
-  @override
-  Future<void> signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } on Exception catch (e) {
-      print('exception->$e');
-    }
+    contacts.add(contact);
   }
 }
