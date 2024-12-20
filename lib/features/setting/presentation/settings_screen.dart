@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:globe_trans_app/features/setting/widget/change_mobile_number.dart';
 import 'package:globe_trans_app/features/setting/widget/create_profile.dart';
+import 'package:globe_trans_app/features/shared/auth_repository.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -14,6 +16,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authRepository = context.read<AuthRepository>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Einstellungen"),
@@ -80,6 +83,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () {
               // Hier kommt einm Über Screen hin
             },
+          ),
+          const Divider(color: Colors.green),
+          ListTile(
+            leading: const Icon(Icons.exit_to_app, color: Colors.white),
+            title:
+                const Text("Ausloggen", style: TextStyle(color: Colors.white)),
+            trailing: const Icon(Icons.arrow_forward_ios, color: Colors.white),
+            onTap: () => authRepository.signOutFromGoogle(),
           ),
         ],
       ),
