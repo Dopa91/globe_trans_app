@@ -6,7 +6,7 @@ import 'package:globe_trans_app/features/register_feature/presentation/verificat
 import 'package:globe_trans_app/features/register_feature/repository/country_class.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/country_select.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/register_button.dart';
-import 'package:globe_trans_app/features/shared/database_repository.dart';
+import 'package:globe_trans_app/features/shared/auth_repository.dart';
 import 'package:provider/provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -51,9 +51,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     final fullPhoneNumber = '$selectedCountryCode$phoneNumber';
 
+    print("Code senden an $fullPhoneNumber");
+
     try {
       // Sende den Verifizierungscode
-      context.read<DatabaseRepository>().sendVerificationCode(fullPhoneNumber);
+      context.read<AuthRepository>().sendVerificationCode(fullPhoneNumber);
 
       // Weiterleitung zur SMS-Code-Eingabeseite
       Navigator.push(
@@ -176,7 +178,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             ),
             TextButton(
               onPressed: () {
-                context.read<DatabaseRepository>().signInWithGoogle();
+                context.read<AuthRepository>().signInWithGoogle();
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const AddContactScreen(),
                 ));
