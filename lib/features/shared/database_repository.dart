@@ -45,11 +45,4 @@ abstract class DatabaseRepository {
   // Kontakt Liste anzeigen
 
   Future<void> getContact(Contact contact);
-
-// Verification Code
-  Future<void> sendVerificationCode(String phoneNumber);
-
-  // Sign Google
-
-  Future<void> signInWithGoogle();
 }
