@@ -95,7 +95,7 @@ class AddContactScreenState extends State<AddContactScreen> {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          controller: _phoneNumberController,
+                          controller: TextEditingController(),
                           enabled: false,
                           decoration: const InputDecoration(
                             hintText: "Telefon",
