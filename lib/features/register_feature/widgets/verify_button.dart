@@ -1,15 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
+import 'package:globe_trans_app/features/shared/auth_repository.dart';
+import 'package:provider/provider.dart';
 
 class SubmitButtonWidget2 extends StatelessWidget {
-  const SubmitButtonWidget2.verifyButton({
-    super.key,
-  });
+  final String smsCode;
+  const SubmitButtonWidget2.verifyButton({super.key, required this.smsCode});
 
   @override
   Widget build(BuildContext context) {
+    final AuthRepository authRepository = context.read<AuthRepository>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 90),
       child: SizedBox(
@@ -24,13 +25,14 @@ class SubmitButtonWidget2 extends StatelessWidget {
             elevation: 10,
           ),
           onPressed: () {
-            Navigator.push(
+            authRepository.signInWithPhoneNumber(smsCode);
+            /* Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const AddContactScreen(
                       //repository: repository,
                       )),
-            );
+            );*/
           },
           child: const Text(
             "Verify Now",
