@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class TextNameField extends StatelessWidget {
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
-  const TextNameField(
-      {super.key,
-      required this.firstNameController,
-      required this.lastNameController});
+
+  const TextNameField({
+    super.key,
+    required this.firstNameController,
+    required this.lastNameController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class TextNameField extends StatelessWidget {
       ),
       child: Column(
         children: [
+          // Vornamen-Feld
           TextFormField(
             controller: firstNameController,
             keyboardType: TextInputType.name,
@@ -40,6 +43,7 @@ class TextNameField extends StatelessWidget {
           const Divider(
             color: Colors.green,
           ),
+
           TextFormField(
             controller: lastNameController,
             keyboardType: TextInputType.name,

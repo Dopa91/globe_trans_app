@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/features/adcontact_feature/repository/country_flag.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/input_email_field.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/language_dropdown.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 import 'package:provider/provider.dart';
-
-import '../../adcontact_feature/repository/country_flag.dart';
+import '../../adcontact_feature/presentation/class.contact.dart';
 
 class ContactDetailScreen extends StatefulWidget {
-  const ContactDetailScreen({super.key, required String contact});
+  final Contact contact; // Füge die Kontakt-Referenz hinzu
+
+  const ContactDetailScreen({super.key, required this.contact});
 
   @override
   ContactDetailScreenState createState() => ContactDetailScreenState();
@@ -17,9 +19,24 @@ class ContactDetailScreen extends StatefulWidget {
 class ContactDetailScreenState extends State<ContactDetailScreen> {
   String selectedCountryCode = '+49';
   String selectedCountryName = 'Deutschland';
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  late final TextEditingController _firstNameController;
+  late final TextEditingController _lastNameController;
+  late final TextEditingController _phoneNumberController;
+  late final TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialisiere die Controller mit den Werten des übergebenen Kontakts
+    _firstNameController =
+        TextEditingController(text: widget.contact.name.split(' ')[0]);
+    _lastNameController =
+        TextEditingController(text: widget.contact.name.split(' ')[1]);
+    _phoneNumberController =
+        TextEditingController(text: widget.contact.phoneNumber);
+    _emailController = TextEditingController(text: widget.contact.email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +52,34 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
         actions: <Widget>[
           GestureDetector(
             onTap: () async {
-              // Neuen Kontakt hinzufügen
-              await context.read<DatabaseRepository>().addContact(
-                  "${_firstNameController.text} ${_lastNameController.text}",
-                  "email",
-                  "phoneNumber",
-                  "image");
-              // Bestätigungsmeldung anzeigen
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Änderungen gespeichert'),
-                ),
-              );
+              try {
+                // Kontakt aktualisieren (nur Beispiel)
+                await context.read<DatabaseRepository>().updateContact(
+                      widget.contact.id,
+                      "${_firstNameController.text} ${_lastNameController.text}",
+                      _emailController.text,
+                      _phoneNumberController.text,
+                    );
+                setState(() {
+                  widget.contact.name =
+                      "${_firstNameController.text} ${_lastNameController.text}";
+                  widget.contact.email = _emailController.text;
+                  widget.contact.phoneNumber = _phoneNumberController.text;
+                });
+                // Bestätigungsmeldung anzeigen
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Änderungen gespeichert'),
+                  ),
+                );
+              } catch (e) {
+                // Fehlerbehandlung
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Fehler beim Speichern: $e'),
+                  ),
+                );
+              }
             },
             child: const Padding(
               padding: EdgeInsets.only(right: 20),
@@ -91,7 +124,8 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: _phoneNumberController,
-                          enabled: false,
+                          enabled:
+                              true, // Hier kannst du das Feld editierbar machen
                           decoration: const InputDecoration(
                             hintText: "Telefon",
                             hintStyle: TextStyle(
@@ -195,7 +229,9 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
             ),
             InputEmailField(
               text: "E-Mail",
-              controller: TextEditingController(),
+              controller: _emailController,
+              phoneController:
+                  _phoneNumberController, // Verwende den Controller hier
             ),
             const SizedBox(height: 30),
             const LanguageDropdown(text: "Ausgangssprache"),

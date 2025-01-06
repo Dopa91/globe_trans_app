@@ -73,8 +73,8 @@ class AddContactScreenState extends State<AddContactScreen> {
         child: Column(
           children: [
             TextNameField(
-              firstNameController: _firstNameController,
-              lastNameController: _lastNameController,
+              firstNameController: TextEditingController(),
+              lastNameController: TextEditingController(),
             ),
             const SizedBox(height: 32),
             Container(
@@ -201,6 +201,7 @@ class AddContactScreenState extends State<AddContactScreen> {
             InputEmailField(
               text: "E-Mail",
               controller: TextEditingController(),
+              phoneController: TextEditingController(),
             ),
             const SizedBox(height: 30),
             const LanguageDropdown(text: "Ausgangssprache"),

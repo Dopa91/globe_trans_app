@@ -81,20 +81,20 @@ class _ContactViewState extends State<ContactView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const ContactDetailScreen(contact: '')),
+          builder: (context) => ContactDetailScreen(
+              contact: Contact(
+                  name: "", email: "", phoneNumber: "", image: "", id: ''))),
     ).then((_) {
       // Nach dem Hinzufügen des Kontakts, die Kontaktliste neu laden
       setState(() {});
     });
   }
 
-  void _navigateToContactDetail(String contact) {
+  void _navigateToContactDetail(Contact contact) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ContactDetailScreen(
-          contact: contact,
-        ),
+        builder: (context) => ContactDetailScreen(contact: contact),
       ),
     );
   }
@@ -190,7 +190,7 @@ class _ContactViewState extends State<ContactView> {
                         return ListView.builder(
                           itemCount: _filteredContacts.length,
                           itemBuilder: (context, index) {
-                            String contactName = _filteredContacts[index];
+                            Contact contact = snapshot.data![index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 3.0, horizontal: 35.0),
@@ -216,7 +216,7 @@ class _ContactViewState extends State<ContactView> {
                                         AssetImage('assets/logo.png'),
                                   ),
                                   title: Text(
-                                    contactName,
+                                    contact.name,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
@@ -231,7 +231,7 @@ class _ContactViewState extends State<ContactView> {
                                     ),
                                   ),
                                   onTap: () =>
-                                      _navigateToContactDetail(contactName),
+                                      _navigateToContactDetail(contact),
                                 ),
                               ),
                             );

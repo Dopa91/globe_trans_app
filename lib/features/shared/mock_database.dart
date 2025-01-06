@@ -73,7 +73,11 @@ class MockDatabase implements DatabaseRepository {
   Future<void> addContact(
       String name, String email, String phoneNumber, String image) async {
     Contact newContact = Contact(
-        name: name, email: email, phoneNumber: phoneNumber, image: image);
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        image: image,
+        id: '');
     contacts.add(newContact);
     return Future.value();
   }
@@ -97,5 +101,25 @@ class MockDatabase implements DatabaseRepository {
   Future<void> getContact(Contact contact) async {
     await Future.delayed(const Duration(seconds: 1));
     contacts.add(contact);
+  }
+
+  @override
+  Future<void> updateContact(
+      String id, String name, String email, String phoneNumber) async {
+    // Suche den Kontakt anhand der ID
+    final index = contacts.indexWhere((contact) => contact.id == id);
+
+    // Wenn der Kontakt gefunden wurde, aktualisiere ihn
+    if (index != -1) {
+      contacts[index] = Contact(
+        id: id,
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        image: contacts[index].image, // Behalte das Bild des Kontakts bei
+      );
+    }
+
+    await Future.delayed(const Duration(seconds: 1));
   }
 }

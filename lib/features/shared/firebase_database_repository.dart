@@ -94,7 +94,8 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
             name: doc["name"],
             email: doc["email"],
             phoneNumber: doc["phoneNumber"],
-            image: doc["image"]))
+            image: doc["image"],
+            id: 'id'))
         .toList();
   }
 
@@ -118,5 +119,29 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
       Message message, String newContent, String newTimeStamp) async {
     // Muss noch implementiert werden
     throw UnimplementedError();
+  }
+
+  // Methode zum Aktualisieren eines Kontakts
+  @override
+  Future<void> updateContact(
+    String id,
+    String name,
+    String email,
+    String phoneNumber,
+  ) async {
+    final firestore = FirebaseFirestore.instance;
+    String userId = await getUserId();
+
+    // Hier wird die ID des Kontakts verwendet, um den Kontakt zu finden und zu aktualisieren
+    await firestore
+        .collection("users")
+        .doc(userId)
+        .collection("contacts")
+        .doc(id) // Verwenden der ID des zu aktualisierenden Kontakts
+        .update({
+      "name": name,
+      "email": email,
+      "phoneNumber": phoneNumber,
+    });
   }
 }

@@ -45,4 +45,11 @@ abstract class DatabaseRepository {
   // Kontakt Liste anzeigen
 
   Future<void> getContact(Contact contact);
+
+  Future<void> updateContact(
+    String id,
+    String name,
+    String email,
+    String phoneNumber,
+  );
 }

@@ -1,14 +1,16 @@
 class Contact {
-  final String name;
-  final String email;
-  final String phoneNumber;
+  final String id; // Füge eine ID hinzu
+  late final String name;
+  late final String email;
+  late final String phoneNumber;
   final String? image;
 
   Contact({
+    required this.id, // ID muss beim Erstellen des Kontaktobjekts übergeben werden
     required this.name,
     required this.email,
     required this.phoneNumber,
-    required this.image,
+    this.image,
   });
 
   // @override
