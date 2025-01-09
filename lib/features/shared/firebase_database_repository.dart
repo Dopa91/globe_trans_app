@@ -5,14 +5,19 @@ import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.d
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class FirebaseDatabaseRepository implements DatabaseRepository {
+  @override
+  void notifyListeners() {
+    // noch nicht implementiert
+  }
   // Kontakt hinzufügen
   @override
-  Future<void> addContact(
-      String name, String email, String phoneNumber, String image) async {
+  Future<void> addContact(String firstName, String lastName, String email,
+      String phoneNumber, String image) async {
     final firestore = FirebaseFirestore.instance;
     String userId = await getUserId();
     await firestore.collection("users").doc(userId).collection("contacts").add({
-      "name": name,
+      "firstName": firstName,
+      "lastName": lastName,
       "email": email,
       "phoneNumber": phoneNumber,
       "image": image,
@@ -44,14 +49,14 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
   // Kontakt löschen
   @override
   Future<void> deleteContact(Contact contact) async {
+    // TODO: Delete funktion muss noch erledigt werden
     final firestore = FirebaseFirestore.instance;
     String userId = await getUserId();
-    await firestore
+    firestore
         .collection("users")
         .doc(userId)
         .collection("contacts")
-        .doc(contact.name)
-        .delete();
+        .where("phoneNumber", isEqualTo: contact.phoneNumber);
   }
 
   @override
@@ -75,8 +80,8 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
   }
 
   @override
-  Future<void> getContact(Contact contact) async {
-    // Muss noch implementiert werden
+  Future<Contact> getContact(Contact contact) async {
+    return contact;
   }
 
   // Rufe Kontaktliste ab
@@ -91,7 +96,8 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
         .get();
     return snapshot.docs
         .map((doc) => Contact(
-            name: doc["name"],
+            firstName: doc["firstName"],
+            lastName: doc["lastName"],
             email: doc["email"],
             phoneNumber: doc["phoneNumber"],
             image: doc["image"]))
@@ -105,6 +111,26 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
 
   @override
   Future<void> saveContactList(List<Contact> contacts) async {
+    final firestore = FirebaseFirestore.instance;
+    String userId = await getUserId();
+    final batch = firestore.batch();
+
+    for (var contact in contacts) {
+      final docRef = firestore
+          .collection("users")
+          .doc(userId)
+          .collection("contacts")
+          .doc(contact.firstName);
+
+      batch.set(docRef, {
+        "name": contact.firstName,
+        "email": contact.email,
+        "phoneNumber": contact.phoneNumber,
+        "image": contact.image,
+      });
+    }
+
+    await batch.commit();
     // Muss noch implementiert werden
   }
 
