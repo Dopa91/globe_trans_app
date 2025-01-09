@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/input_email_field.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/language_dropdown.dart';
 import 'package:globe_trans_app/features/adcontact_feature/widgets/text_name_field.dart';
@@ -8,7 +9,8 @@ import 'package:provider/provider.dart';
 import '../../adcontact_feature/repository/country_flag.dart';
 
 class ContactDetailScreen extends StatefulWidget {
-  const ContactDetailScreen({super.key, required String contact});
+  const ContactDetailScreen({super.key, required this.contact});
+  final Contact contact;
 
   @override
   ContactDetailScreenState createState() => ContactDetailScreenState();
@@ -37,9 +39,10 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
             onTap: () async {
               // Neuen Kontakt hinzufügen
               await context.read<DatabaseRepository>().addContact(
-                  "${_firstNameController.text} ${_lastNameController.text}",
+                  _firstNameController.text,
+                  _lastNameController.text,
                   "email",
-                  "phoneNumber",
+                  "$selectedCountryCode ${_phoneNumberController.text}",
                   "image");
               // Bestätigungsmeldung anzeigen
               ScaffoldMessenger.of(context).showSnackBar(
@@ -68,6 +71,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
         child: Column(
           children: [
             TextNameField(
+              contact: widget.contact,
               firstNameController: _firstNameController,
               lastNameController: _lastNameController,
             ),
@@ -91,7 +95,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                       Expanded(
                         child: TextFormField(
                           controller: _phoneNumberController,
-                          enabled: false,
+                          enabled: true,
                           decoration: const InputDecoration(
                             hintText: "Telefon",
                             hintStyle: TextStyle(
@@ -171,6 +175,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: TextFormField(
+                          keyboardType: TextInputType.phone,
                           controller: _phoneNumberController,
                           decoration: const InputDecoration(
                             hintText: "Nummer",
