@@ -33,8 +33,9 @@ abstract class DatabaseRepository {
   Future<List<Contact>> getContactList();
 
   // Kontakte hinzufügen
-  Future<void> addContact(
-      String name, String email, String phoneNumber, String image);
+  Future<void> addContact(String firstName, String lastName, String email,
+      String phoneNumber, String image);
+  notifyListeners();
 
   // Kontakte löschen
   Future<void> deleteContact(Contact contact);
