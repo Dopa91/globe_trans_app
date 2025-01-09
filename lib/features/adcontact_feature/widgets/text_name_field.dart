@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:globe_trans_app/features/adcontact_feature/presentation/class.contact.dart';
 
 class TextNameField extends StatelessWidget {
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
-  const TextNameField(
-      {super.key,
-      required this.firstNameController,
-      required this.lastNameController});
+  final Contact? contact;
+  //final String hintText;
+
+  const TextNameField({
+    super.key,
+    required this.firstNameController,
+    required this.lastNameController,
+    this.contact,
+    //required this.hintText});
+  });
 
   @override
   Widget build(BuildContext context) {
+    if (contact != null) {
+      firstNameController.text = contact!.firstName;
+      lastNameController.text = contact!.lastName;
+    }
+
     return Container(
       padding: const EdgeInsets.only(
         left: 20,

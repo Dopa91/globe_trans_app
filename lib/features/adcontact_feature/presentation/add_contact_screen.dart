@@ -41,7 +41,8 @@ class AddContactScreenState extends State<AddContactScreen> {
               // Neuen Kontakt hinzufügen
 
               context.read<DatabaseRepository>().addContact(
-                  "${_firstNameController.text} ${_lastNameController.text}",
+                  _firstNameController.text,
+                  _lastNameController.text,
                   "email",
                   "$_phoneNumberController",
                   "image");
