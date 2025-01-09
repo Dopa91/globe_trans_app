@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:globe_trans_app/config/colors.dart';
-import 'package:globe_trans_app/features/adcontact_feature/presentation/add_contact_screen.dart';
+import 'package:globe_trans_app/features/contact_overview_feature/presentation/contact_overview.dart';
 import 'package:globe_trans_app/features/register_feature/presentation/verificationScreen/verification_screen.dart';
 import 'package:globe_trans_app/features/register_feature/repository/country_class.dart';
 import 'package:globe_trans_app/features/register_feature/widgets/country_select.dart';
@@ -180,7 +180,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onPressed: () {
                 context.read<AuthRepository>().signInWithGoogle();
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const AddContactScreen(),
+                  builder: (context) => const ContactView(),
                 ));
               },
               child: const Text("Register with Google"),
