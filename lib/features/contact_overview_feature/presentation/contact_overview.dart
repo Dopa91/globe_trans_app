@@ -64,7 +64,7 @@ class _ContactViewState extends State<ContactView> {
     if (_filteredContacts.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: Colors.black.withOpacity(0.7),
+          backgroundColor: Colors.black.withValues(alpha: 0.7),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -81,14 +81,22 @@ class _ContactViewState extends State<ContactView> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => const ContactDetailScreen(contact: '')),
+          builder: (context) => ContactDetailScreen(
+              contact: Contact(
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  image: "",
+                  phoneNumber: ""))),
     ).then((_) {
       // Nach dem Hinzufügen des Kontakts, die Kontaktliste neu laden
-      setState(() {});
+      setState(() {
+        context.read<DatabaseRepository>().getContactList();
+      });
     });
   }
 
-  void _navigateToContactDetail(String contact) {
+  void _navigateToContactDetail(Contact contact) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -180,7 +188,8 @@ class _ContactViewState extends State<ContactView> {
                         // Extrahiere die Namen der Kontakte
                         _contacts.clear();
                         _contacts.addAll((snapshot.data as List<Contact>)
-                            .map((contact) => contact.name)
+                            .map((contact) =>
+                                "${contact.firstName} ${contact.lastName}")
                             .toList());
 
                         _filteredContacts = _filteredContacts.isEmpty
@@ -203,7 +212,8 @@ class _ContactViewState extends State<ContactView> {
                                   borderRadius: BorderRadius.circular(20),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black87.withOpacity(0.05),
+                                      color: Colors.black87
+                                          .withValues(alpha: 0.05),
                                       spreadRadius: 2,
                                       blurRadius: 6,
                                     ),
@@ -230,8 +240,9 @@ class _ContactViewState extends State<ContactView> {
                                       fontSize: 14,
                                     ),
                                   ),
-                                  onTap: () =>
-                                      _navigateToContactDetail(contactName),
+                                  onTap: () => _navigateToContactDetail(snapshot
+                                          .data![
+                                      index]), // Ensure this line is correct
                                 ),
                               ),
                             );
