@@ -3,6 +3,11 @@ import 'package:globe_trans_app/features/chat_feature/presentation/chat_screen.d
 import 'package:globe_trans_app/features/shared/database_repository.dart';
 
 class MockDatabase implements DatabaseRepository {
+  @override
+  void notifyListeners() {
+    // noch nicht implementiert
+  }
+
   final List<Message> _messages = [];
   final List<Chat> _chats = [];
   List<String> saveNames = [];
@@ -70,10 +75,14 @@ class MockDatabase implements DatabaseRepository {
 
   // Kontakt hinzufügen
   @override
-  Future<void> addContact(
-      String name, String email, String phoneNumber, String image) async {
+  Future<void> addContact(String firstName, String lastName, String email,
+      String phoneNumber, String image) async {
     Contact newContact = Contact(
-        name: name, email: email, phoneNumber: phoneNumber, image: image);
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phoneNumber: phoneNumber,
+        image: image);
     contacts.add(newContact);
     return Future.value();
   }
