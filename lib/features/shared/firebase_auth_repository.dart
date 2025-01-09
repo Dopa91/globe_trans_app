@@ -58,8 +58,8 @@ class FirebaseAuthRepository implements AuthRepository {
             "Fehler bei der Verifizierung:  ${e.code} ${e.message}");
       },
       codeSent: (String verificationId, int? resendToken) {
-        print("Code gesendet: $verificationId");
         setVerificationId(verificationId);
+        print("Code gesendet: $verificationId");
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         print("Auto-Retrieval Timeout: $verificationId");
