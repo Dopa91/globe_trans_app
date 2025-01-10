@@ -29,6 +29,10 @@ abstract class DatabaseRepository {
   // Übersicht aller chats
   Future<List<Chat>> getAllChats();
 
+  // hinzufügen zu chats
+  Future<void> addToChats(Contact contact);
+  Future<List<Contact>> getChatContacts();
+
   // Kontakte
   Future<List<Contact>> getContactList();
 
