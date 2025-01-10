@@ -22,6 +22,90 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialisiere die Controller mit den bestehenden Kontaktdaten
+    _firstNameController.text = widget.contact.firstName;
+    _lastNameController.text = widget.contact.lastName;
+    _emailController.text = widget.contact.email;
+
+    // Extrahiere Ländervorwahl und Nummer aus der Telefonnummer
+    if (widget.contact.phoneNumber.isNotEmpty) {
+      final phoneComponents = widget.contact.phoneNumber.split(' ');
+      if (phoneComponents.length > 1) {
+        selectedCountryCode = phoneComponents[0];
+        _phoneNumberController.text = phoneComponents[1];
+        // Aktualisiere den Ländernamen basierend auf der Vorwahl
+        selectedCountryName =
+            countryCodes[selectedCountryCode]?['name'] ?? 'Deutschland';
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    // Gebe die Controller frei
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneNumberController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  bool _validateForm() {
+    if (_firstNameController.text.isEmpty || _lastNameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bitte geben Sie Vor- und Nachnamen ein'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    }
+    if (_phoneNumberController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bitte geben Sie eine Telefonnummer ein'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _saveContact() async {
+    if (!_validateForm()) return;
+
+    try {
+      await context.read<DatabaseRepository>().addContact(
+          _firstNameController.text,
+          _lastNameController.text,
+          _emailController.text,
+          "$selectedCountryCode ${_phoneNumberController.text}",
+          "image");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Kontakt wurde erfolgreich gespeichert'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Fehler beim Speichern: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +120,7 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
         backgroundColor: const Color.fromARGB(255, 205, 218, 220),
         actions: <Widget>[
           GestureDetector(
-            onTap: () async {
-              // Neuen Kontakt hinzufügen
-              await context.read<DatabaseRepository>().addContact(
-                  _firstNameController.text,
-                  _lastNameController.text,
-                  "email",
-                  "$selectedCountryCode ${_phoneNumberController.text}",
-                  "image");
-              // Bestätigungsmeldung anzeigen
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Änderungen gespeichert'),
-                ),
-              );
-            },
+            onTap: _saveContact,
             child: const Padding(
               padding: EdgeInsets.only(right: 20),
               child: Center(
@@ -66,145 +136,93 @@ class ContactDetailScreenState extends State<ContactDetailScreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(50),
-        child: Column(
-          children: [
-            TextNameField(
-              contact: widget.contact,
-              firstNameController: _firstNameController,
-              lastNameController: _lastNameController,
-            ),
-            const SizedBox(height: 32),
-            Container(
-              padding: const EdgeInsets.only(
-                left: 20,
-                right: 30,
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(50),
+          child: Column(
+            children: [
+              TextNameField(
+                contact: widget.contact,
+                firstNameController: _firstNameController,
+                lastNameController: _lastNameController,
               ),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white70,
-                border: Border.all(color: Colors.green),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _phoneNumberController,
-                          enabled: true,
-                          decoration: const InputDecoration(
-                            hintText: "Telefon",
-                            hintStyle: TextStyle(
-                                color: Colors.black87,
+              const SizedBox(height: 32),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white70,
+                  border: Border.all(color: Colors.green),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        DropdownButton<String>(
+                          value: selectedCountryCode,
+                          items: countryCodes.keys.map((String code) {
+                            return DropdownMenuItem<String>(
+                              value: code,
+                              child: Row(
+                                children: [
+                                  Text(countryCodes[code]!['flag']!),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    code,
+                                    style: const TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 16,
+                                      fontFamily: "SFProDisplay",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (String? newCode) {
+                            setState(() {
+                              selectedCountryCode = newCode!;
+                              selectedCountryName =
+                                  countryCodes[newCode]!['name']!;
+                            });
+                          },
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.phone,
+                            controller: _phoneNumberController,
+                            decoration: const InputDecoration(
+                              hintText: "Telefonnummer",
+                              hintStyle: TextStyle(
                                 fontSize: 16,
                                 fontFamily: "SFProDisplay",
                                 fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.italic),
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 100),
-                        child: Text(
-                          selectedCountryName,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontFamily: "SFProDisplay",
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(
-                    color: Colors.green,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Mobile",
-                        style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 16,
-                          fontFamily: "SFProDisplay",
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      DropdownButton<String>(
-                        value: selectedCountryCode,
-                        items: countryCodes.keys.map((String code) {
-                          return DropdownMenuItem<String>(
-                            value: code,
-                            child: Row(
-                              children: [
-                                Text(countryCodes[code]!['flag']!),
-                                const SizedBox(width: 10),
-                                Text(
-                                  code,
-                                  style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                    fontFamily: "SFProDisplay",
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                              ],
+                                fontStyle: FontStyle.italic,
+                                color: Colors.grey,
+                              ),
+                              border: InputBorder.none,
                             ),
-                          );
-                        }).toList(),
-                        onChanged: (String? newCode) {
-                          setState(() {
-                            selectedCountryCode = newCode!;
-                            selectedCountryName =
-                                countryCodes[newCode]!['name']!;
-                          });
-                        },
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.phone,
-                          controller: _phoneNumberController,
-                          decoration: const InputDecoration(
-                            hintText: "Nummer",
-                            hintStyle: TextStyle(
-                              fontSize: 16,
-                              fontFamily: "SFProDisplay",
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.grey,
-                            ),
-                            border: InputBorder.none,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            InputEmailField(
-              text: "E-Mail",
-              controller: TextEditingController(),
-            ),
-            const SizedBox(height: 30),
-            const LanguageDropdown(text: "Ausgangssprache"),
-          ],
+              const SizedBox(height: 30),
+              InputEmailField(
+                text: "E-Mail",
+                controller: _emailController,
+              ),
+              const SizedBox(height: 30),
+              const LanguageDropdown(text: "Ausgangssprache"),
+            ],
+          ),
         ),
       ),
     );
