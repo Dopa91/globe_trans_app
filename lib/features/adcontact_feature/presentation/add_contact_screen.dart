@@ -44,7 +44,7 @@ class AddContactScreenState extends State<AddContactScreen> {
                   _firstNameController.text,
                   _lastNameController.text,
                   "email",
-                  "$_phoneNumberController",
+                  _phoneNumberController.text,
                   "image");
               // Navigation
               Navigator.push(
@@ -96,8 +96,8 @@ class AddContactScreenState extends State<AddContactScreen> {
                     children: [
                       Expanded(
                         child: TextFormField(
-                          controller: TextEditingController(),
-                          enabled: false,
+                          controller: _phoneNumberController,
+                          keyboardType: TextInputType.phone,
                           decoration: const InputDecoration(
                             hintText: "Telefon",
                             hintStyle: TextStyle(
