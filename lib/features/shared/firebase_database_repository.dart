@@ -110,6 +110,62 @@ class FirebaseDatabaseRepository implements DatabaseRepository {
   }
 
   @override
+  Future<void> addToChats(Contact contact) async {
+    final firestore = FirebaseFirestore.instance;
+    String userId = await getUserId();
+
+    await firestore
+        .collection("users")
+        .doc(userId)
+        .collection("chat_contacts")
+        .doc(contact.phoneNumber)
+        .set({
+      "contact_id": contact.phoneNumber,
+      "added_at": DateTime.now().toIso8601String(),
+    });
+  }
+
+  // Rufe Chat-Kontakte ab
+  @override
+  Future<List<Contact>> getChatContacts() async {
+    final firestore = FirebaseFirestore.instance;
+    String userId = await getUserId();
+
+    // Hole zuerst die Chat-Kontakt-IDs
+    final chatContactsSnapshot = await firestore
+        .collection("users")
+        .doc(userId)
+        .collection("chat_contacts")
+        .orderBy("added_at", descending: true)
+        .get();
+
+    // Hole dann die vollständigen Kontaktdaten
+    List<Contact> chatContacts = [];
+    for (var doc in chatContactsSnapshot.docs) {
+      final contactId = doc["contact_id"];
+      final contactSnapshot = await firestore
+          .collection("users")
+          .doc(userId)
+          .collection("contacts")
+          .where("phoneNumber", isEqualTo: contactId)
+          .get();
+
+      if (contactSnapshot.docs.isNotEmpty) {
+        final contactData = contactSnapshot.docs.first;
+        chatContacts.add(Contact(
+          firstName: contactData["firstName"],
+          lastName: contactData["lastName"],
+          email: contactData["email"],
+          phoneNumber: contactData["phoneNumber"],
+          image: contactData["image"],
+        ));
+      }
+    }
+
+    return chatContacts;
+  }
+
+  @override
   Future<void> saveContactList(List<Contact> contacts) async {
     final firestore = FirebaseFirestore.instance;
     String userId = await getUserId();
