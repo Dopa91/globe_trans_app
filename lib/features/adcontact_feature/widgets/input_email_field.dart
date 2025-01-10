@@ -4,9 +4,12 @@ class InputEmailField extends StatelessWidget {
   const InputEmailField({
     super.key,
     required this.text,
-    required TextEditingController controller,
+    required this.controller,
   });
+
   final String text;
+  final TextEditingController controller;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +26,7 @@ class InputEmailField extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            controller: controller,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: text,
