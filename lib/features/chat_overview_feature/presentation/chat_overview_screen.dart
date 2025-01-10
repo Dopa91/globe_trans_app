@@ -40,7 +40,9 @@ class _ChatViewState extends State<ChatView> {
               const Divider(color: Colors.green),
               Expanded(
                 child: FutureBuilder<List<Contact>>(
-                  future: context.read<DatabaseRepository>().getContactList(),
+                  future: context
+                      .read<DatabaseRepository>()
+                      .getChatContacts(), // Changed this line
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
