@@ -10,6 +10,7 @@ class MockDatabase implements DatabaseRepository {
 
   final List<Message> _messages = [];
   final List<Chat> _chats = [];
+  final List<Contact> _chatContacts = [];
   List<String> saveNames = [];
   List<Contact> contacts = [];
 
@@ -64,6 +65,21 @@ class MockDatabase implements DatabaseRepository {
   Future<List<Chat>> getAllChats() async {
     await Future.delayed(const Duration(seconds: 1));
     return _chats;
+  }
+
+  // Chat Kontakte hinzufügen
+  @override
+  Future<void> addToChats(Contact contact) async {
+    if (!_chatContacts.contains(contact)) {
+      _chatContacts.add(contact);
+    }
+  }
+
+// Chat Kontakte abrufen
+  @override
+  Future<List<Contact>> getChatContacts() async {
+    await Future.delayed(const Duration(seconds: 1));
+    return _chatContacts;
   }
 
   // Kontakte abrufen
